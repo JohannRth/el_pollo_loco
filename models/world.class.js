@@ -12,7 +12,9 @@ class World {
     ];
 
     backgroundObjects = [
-        new BackgroundObject('img/5_background/layers/3_third_layer/1.png')
+        new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
+        new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
+        new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0)
     ];
 
     canvas;
@@ -29,11 +31,10 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.clouds);
-        this.addObjectsToMap(this.enemies);
         this.addObjectsToMap(this.backgroundObjects);
-
+        this.addObjectsToMap(this.clouds);
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.enemies);
 
         // Draw() wird immer wieder aufgerufen
         let self = this;
@@ -42,7 +43,7 @@ class World {
         });
     }
 
-    addObjectsToMap(objects){
+    addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         })
