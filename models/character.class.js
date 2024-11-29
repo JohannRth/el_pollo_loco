@@ -74,8 +74,11 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+        this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_LONGIDLE);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.applyGravity();
         this.animate();
@@ -107,6 +110,8 @@ class Character extends MovableObject {
 
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
