@@ -27,6 +27,16 @@ class DrawableObject {
         };
     }
 
+    // drawFrameOffset(ctx) {
+    //     if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
+    //         ctx.beginPath();
+    //         ctx.lineWidth = '3';
+    //         ctx.strokeStyle = 'red';
+    //         ctx.rect(this.offset.left, this.offset.right, this.offset.top, this.offset.bottom);
+    //         ctx.stroke();
+    //     };
+    // }
+
         /**
      * 
      * @param {Array} arr  - ['img/image1.png', 'img/image2.png', ...]

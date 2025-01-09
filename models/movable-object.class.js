@@ -30,13 +30,18 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
-
+    // isColliding(mo) {
+    //     return this.x + this.width > mo.x &&
+    //         this.y + this.height > mo.y &&
+    //         this.x < mo.x + mo.width &&
+    //         this.y < mo.y + mo.height;
+    // }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x + mo.width &&
-            this.y < mo.y + mo.height;
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height -mo.offset.bottom;
     }
 
     hit() {
@@ -58,6 +63,11 @@ class MovableObject extends DrawableObject {
         return this.energy == 0;
     }
 
+    isWaiting() {
+        if (!this.world.keyboard.D && !this.world.keyboard.LEFT && !this.world.keyboard.RIGHT && !this.world.keyboard.SPACE && !this.isAboveGround()) {
+            return true;
+        }
+    }
 
     playAnimation(images) {
         let i = this.currentImage % images.length; // let i = 0 % 10;

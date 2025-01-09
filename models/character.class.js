@@ -114,7 +114,6 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
@@ -122,13 +121,25 @@ class Character extends MovableObject {
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
-
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     //Walk animation
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             };
-        }, 50);
+        }, 60);
+
+        setInterval(() => {
+            if (this.isWaiting()) {
+                this.playAnimation(this.IMAGES_IDLE);
+                this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
+                if (this.timer >= 13000) { // Überprüfe, ob 7 Sekunden vorbei sind
+                    this.playAnimation(this.IMAGES_LONGIDLE);
+                    // this.snoring_sound.play();
+                }
+            } else {
+                this.timer = 0; // Timer zurücksetzen, wenn die Bedingung nicht erfüllt ist
+            }
+        }, 300); // Wird alle 300 Millisekunden aufgerufen
     }
 
 }
