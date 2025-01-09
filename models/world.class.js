@@ -5,7 +5,9 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
+    statusBar = new StatusBar(); // Bestehende Status-Bar für Gesundheit
+    statusBarCoins = new CoinStatusBar(); // Neue Status-Bar für Coins
+    statusBarBottles = new BottleStatusBar(); // Neue Status-Bar für Bottles
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -52,14 +54,17 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0); // Back
         // --------- Space for fixed objects ------
         this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottles);
+
         this.ctx.translate(this.camera_x, 0); // Forwards
 
         this.addToMap(this.character);
-        this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
 
