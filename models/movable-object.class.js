@@ -6,6 +6,13 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -23,13 +30,6 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    offset = {
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-    };
-
     // isColliding(mo) {
     //     return this.x + this.width > mo.x &&
     //         this.y + this.height > mo.y &&
@@ -44,8 +44,18 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height -mo.offset.bottom;
     }
 
+    isCollidingOnTop(mo) {
+        const isOnTop = this.y + this.height >= mo.y && this.y + this.height <= mo.y + 50; // Innerhalb des Spielraums
+        const isHorizontallyAligned = this.x + this.width > mo.x && this.x < mo.x + mo.width; // Horizontale Überlappung
+        const isFalling = this.speedY < 0; // Der Charakter fällt nach unten
+        // console.log(isOnTop, isHorizontallyAligned, isFalling);
+
+        return isOnTop && isHorizontallyAligned && isFalling;
+    }
+
     hit() {
         this.energy -= 5;
+
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -56,11 +66,11 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // Differce in ms
         timepassed = timepassed / 1000; //Difference in s
-        return timepassed < 1;
+        return timepassed < 0.5;
     }
 
     isDead() {
-        return this.energy == 0;
+        return this.energy <= 0;
     }
 
     isWaiting() {

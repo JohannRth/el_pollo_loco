@@ -126,7 +126,7 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             };
-        }, 60);
+        }, 90);
 
         setInterval(() => {
             if (this.isWaiting()) {

@@ -28,7 +28,7 @@ class World {
 
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 200);
+        }, 100);
     }
 
     checkThrowObjects() {
@@ -44,6 +44,7 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
+                    console.log('Collision with Character, energy ', this.character.energy)
                 }
             });
         }, 200);
