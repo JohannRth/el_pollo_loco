@@ -97,8 +97,8 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-        // mo.drawFrameOffset(this.ctx);
+        mo.drawFrame(this.ctx); // beide aufrufe sind bei drawable-objects
+        mo.drawFrameOffset(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
