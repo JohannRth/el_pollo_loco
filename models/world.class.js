@@ -8,8 +8,8 @@ class World {
     statusBar = new StatusBar(); // Bestehende Status-Bar für Gesundheit
     statusBarCoins = new CoinStatusBar(); // Neue Status-Bar für Coins
     statusBarBottles = new BottleStatusBar(); // Neue Status-Bar für Bottles
-    // coins = new Coin();
-    // bottles = new Bottle();
+    coins = new Coin();
+    bottles = new Bottle();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -60,8 +60,8 @@ class World {
         this.addObjectsToMap(this.level.clouds);
 
         this.addToMap(this.character);
-        // this.addObjectsToMap(this.level.coins);
-        // this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
 
@@ -83,9 +83,13 @@ class World {
     }
 
     addObjectsToMap(objects) {
-        objects.forEach(o => {
-            this.addToMap(o);
-        })
+        if (objects && Array.isArray(objects)) {
+            objects.forEach(o => {
+                this.addToMap(o);
+            });
+        } else {
+            console.error('Objects array is undefined or not an array:', objects);
+        }
     }
 
     addToMap(mo) {
