@@ -48,7 +48,6 @@ class MovableObject extends DrawableObject {
         const isOnTop = this.y + this.height >= mo.y && this.y + this.height <= mo.y + 50; // Innerhalb des Spielraums
         const isHorizontallyAligned = this.x + this.width > mo.x && this.x < mo.x + mo.width; // Horizontale Überlappung
         const isFalling = this.speedY < 0; // Der Charakter fällt nach unten
-        // console.log(isOnTop, isHorizontallyAligned, isFalling);
 
         return isOnTop && isHorizontallyAligned && isFalling;
     }

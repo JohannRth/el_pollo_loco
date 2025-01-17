@@ -1,12 +1,12 @@
 class Bottle extends MovableObject {
     y = 350;
-    height = 100
-    width = 100
+    height = 80;
+    width = 80;
 
     offset = {
-        left: 40,
+        left: 30,
         right: 20,
-        top: 20,
+        top: 10,
         bottom: 10
     };
 
@@ -14,9 +14,9 @@ class Bottle extends MovableObject {
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
     ];
 
-    constructor() {
+    constructor(x) {
         super().loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
-        this.x = 400;
+        this.x = x;
     }
 
     animate() {
