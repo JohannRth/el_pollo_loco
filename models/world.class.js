@@ -41,15 +41,31 @@ class World {
     }
 
     checkCollisions() {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
-                    console.log('Collision with Character, energy ', this.character.energy)
-                }
-            });
-        }, 200);
+        this.level.enemies.forEach((enemy, index) => {
+            this.checkCollision(enemy, index);
+            this.checkCollisionWithEnemyTop(enemy, index);
+        });
+    }
+
+    checkCollision(enemy, index) {
+        if (this.character.isColliding(enemy) && !this.character.isCollidingOnTop(enemy)) {
+            // Charakter kollidiert mit dem Feind
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+            console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}`);
+        }
+    }
+
+    checkCollisionWithEnemyTop(enemy, index) {
+        if (this.character.isCollidingOnTop(enemy)) {
+            // Charakter trifft den Feind von oben
+            enemy.hit(); // Feind wird getroffen
+            console.log(`Enemy hit from top, index: ${index}, energy: ${enemy.energy}`);
+            if (enemy.energy <= 0) {
+                enemy.die(); // Feind stirbt
+                console.log(`Enemy died, index: ${index}`);
+            }
+        }
     }
 
     draw() {
