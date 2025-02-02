@@ -29,9 +29,10 @@ class World {
     run() {
         setInterval(() => {
 
-            this.checkCollisions();
+            this.checkCoinCollection();
+            this.checkEnemyCollisions();
             this.checkThrowObjects();
-        }, 100);
+        }, 50);
     }
 
     checkThrowObjects() {
@@ -39,11 +40,6 @@ class World {
             let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 50)
             this.throwableObjects.push(bottle);
         }
-    }
-
-    checkCollisions() {
-        this.checkCoinCollection();
-        this.checkEnemyCollisions();
     }
 
     checkEnemyCollisions() {
@@ -92,7 +88,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
 
-        
+
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
