@@ -45,10 +45,9 @@ class MovableObject extends DrawableObject {
     }
 
     isCollidingOnTop(mo) {
-        const isOnTop = this.y + this.height >= mo.y && this.y + this.height <= mo.y + 50; // Innerhalb des Spielraums
-        const isHorizontallyAligned = this.x + this.width > mo.x && this.x < mo.x + mo.width; // Horizontale Überlappung
-        const isFalling = this.speedY < 0; // Der Charakter fällt nach unten
-
+        const isOnTop = this.y + this.height >= mo.y && this.y + this.height <= mo.y + 50;
+        const isHorizontallyAligned = this.x + this.width > mo.x && this.x < mo.x + mo.width;
+        const isFalling = this.speedY < 0;
         return isOnTop && isHorizontallyAligned && isFalling;
     }
 
@@ -76,6 +75,12 @@ class MovableObject extends DrawableObject {
         if (!this.world.keyboard.D && !this.world.keyboard.LEFT && !this.world.keyboard.RIGHT && !this.world.keyboard.SPACE && !this.isAboveGround()) {
             return true;
         }
+    }
+
+    die() {
+        this.energy = 0;
+        this.speed = 0; // Stop enemy movement
+        this.isDead = true; // Mark the object as dead
     }
 
     playAnimation(images) {

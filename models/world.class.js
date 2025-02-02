@@ -42,31 +42,35 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy, index) => {
-            this.checkCollision(enemy, index);
-            this.checkCollisionWithEnemyTop(enemy, index);
-        });
         this.checkCoinCollection();
+        this.checkEnemyCollisions();
     }
 
-    checkCollision(enemy, index) {
-        if (this.character.isColliding(enemy) && !this.character.isCollidingOnTop(enemy)) {
-            // Charakter kollidiert mit dem Feind
-            this.character.hit();
-            this.statusBar.setPercentage(this.character.energy);
-            console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}`);
-        }
-    }
-
-    checkCollisionWithEnemyTop(enemy, index) {
-        if (this.character.isCollidingOnTop(enemy)) {
-            // Charakter trifft den Feind von oben
-            enemy.hit(); // Feind wird getroffen
-            console.log(`Enemy hit from top, index: ${index}, energy: ${enemy.energy}`);
-            if (enemy.energy <= 0) {
-                enemy.die(); // Feind stirbt
-                console.log(`Enemy died, index: ${index}`);
+    checkEnemyCollisions() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isCollidingOnTop(enemy)) {
+                this.handleEnemyCollisionOnTop(enemy, index);
+            } else if (this.character.isColliding(enemy)) {
+                this.handleEnemyCollision(enemy, index);
             }
+        });
+    }
+
+    handleEnemyCollision(enemy, index) {
+        // Charakter kollidiert mit dem Feind
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.energy);
+        console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}`);
+    }
+
+    handleEnemyCollisionOnTop(enemy, index) {
+        // Charakter trifft den Feind von oben
+        enemy.hit(); // Feind wird getroffen
+        console.log(`Enemy hit from top, index: ${index}, energy: ${enemy.energy}`);
+        if (enemy.energy <= 0) {
+            enemy.die(); // Feind stirbt
+            this.level.enemies.splice(index, 1); // Remove enemy from the level
+            console.log(`Enemy died, index: ${index}`);
         }
     }
 
