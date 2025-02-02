@@ -11,6 +11,7 @@ class World {
     coins = new Coin();
     bottles = new Bottle();
     throwableObjects = [];
+    collectedCoins = 0; // Track collected coins
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -45,6 +46,7 @@ class World {
             this.checkCollision(enemy, index);
             this.checkCollisionWithEnemyTop(enemy, index);
         });
+        this.checkCoinCollection();
     }
 
     checkCollision(enemy, index) {
@@ -66,6 +68,17 @@ class World {
                 console.log(`Enemy died, index: ${index}`);
             }
         }
+    }
+
+    checkCoinCollection() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(index, 1); // Remove coin from the level
+                this.collectedCoins += 1; // Increment collected coins
+                this.statusBarCoins.setPercentage(this.collectedCoins * 20); // Update coin status bar
+                console.log(`Coin collected, total: ${this.collectedCoins}`);
+            }
+        });
     }
 
     draw() {
