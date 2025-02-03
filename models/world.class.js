@@ -13,6 +13,7 @@ class World {
     throwableObjects = [];
     collectedCoins = 0; // Track collected coins
     collectedBottles = 0; // Track collected bottles
+    lastThrownBottle = null; // Track the last thrown bottle
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,13 +38,19 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.collectedBottles > 0) {
+        if (this.keyboard.D && this.collectedBottles > 0 && this.canThrowBottle()) {
             let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 50);
             this.throwableObjects.push(bottle);
             this.collectedBottles -= 1; // Decrement collected bottles
             this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
+            this.lastThrownBottle = bottle; // Set the last thrown bottle
+            bottle.animate(); // Start bottle animation
             console.log(`Bottle thrown, remaining: ${this.collectedBottles}`);
         }
+    }
+
+    canThrowBottle() {
+        return !this.lastThrownBottle || this.lastThrownBottle.y > 500; // Allow throwing if no bottle has been thrown or if the last thrown bottle has fallen below y = 500
     }
 
     checkEnemyCollisions() {

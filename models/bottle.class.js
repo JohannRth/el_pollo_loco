@@ -19,11 +19,4 @@ class Bottle extends MovableObject {
         this.x = x;
         this.y = y;
     }
-
-    animate() {
-        setInterval(() => {
-            this.playAnimation(this.BOTTLE_GROUND);
-        }, 160);
-    }
-
 }
