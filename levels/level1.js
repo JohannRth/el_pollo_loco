@@ -46,8 +46,12 @@ const level1 = new Level(
     ],
 
     [
-        new Bottle(400),
-        new Bottle(700)
+        new Bottle(300, 370),
+        new Bottle(500, 370),
+        new Bottle(700, 370),
+        new Bottle(800, 370),
+        new Bottle(1000, 370),
+
     ]
 
 );

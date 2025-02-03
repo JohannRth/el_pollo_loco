@@ -12,6 +12,7 @@ class World {
     bottles = new Bottle();
     throwableObjects = [];
     collectedCoins = 0; // Track collected coins
+    collectedBottles = 0; // Track collected bottles
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,8 +29,8 @@ class World {
 
     run() {
         setInterval(() => {
-
             this.checkCoinCollection();
+            this.checkBottleCollection();
             this.checkEnemyCollisions();
             this.checkThrowObjects();
         }, 50);
@@ -77,6 +78,17 @@ class World {
                 this.collectedCoins += 1; // Increment collected coins
                 this.statusBarCoins.setPercentage(this.collectedCoins * 20); // Update coin status bar
                 console.log(`Coin collected, total: ${this.collectedCoins}`);
+            }
+        });
+    }
+
+    checkBottleCollection() {
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                this.level.bottles.splice(index, 1); // Remove bottle from the level
+                this.collectedBottles += 1; // Increment collected bottles
+                this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
+                console.log(`Bottle collected, total: ${this.collectedBottles}`);
             }
         });
     }
