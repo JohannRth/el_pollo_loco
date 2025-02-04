@@ -76,8 +76,13 @@ class World {
         console.log(`Enemy hit from top, index: ${index}, energy: ${enemy.energy}`);
         if (enemy.energy <= 0) {
             enemy.die(); // Feind stirbt
-            this.level.enemies.splice(index, 1); // Remove enemy from the level
-            console.log(`Enemy died, index: ${index}`);
+            enemy.offset.top = 400; // Set offset to prevent further collisions
+            setTimeout(() => {
+                if (this.level.enemies[index] === enemy) {
+                    this.level.enemies.splice(index, 1); // Remove enemy from the level after 1 second
+                    console.log(`Enemy died, index: ${index}`);
+                }
+            }, 1000); // 1 second delay for dead animation
         }
     }
 
