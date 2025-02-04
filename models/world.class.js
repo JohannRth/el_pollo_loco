@@ -71,19 +71,23 @@ class World {
     }
 
     handleEnemyCollisionOnTop(enemy, index) {
-        // Charakter trifft den Feind von oben
         enemy.hit(); // Feind wird getroffen
         console.log(`Enemy hit from top, index: ${index}, energy: ${enemy.energy}`);
         if (enemy.energy <= 0) {
             enemy.die(); // Feind stirbt
             enemy.offset.top = 400; // Set offset to prevent further collisions
-            setTimeout(() => {
-                if (this.level.enemies[index] === enemy) {
-                    this.level.enemies.splice(index, 1); // Remove enemy from the level after 1 second
-                    console.log(`Enemy died, index: ${index}`);
-                }
-            }, 1000); // 1 second delay for dead animation
+            this.scheduleEnemyRemoval(enemy);
         }
+    }
+
+    scheduleEnemyRemoval(enemy) {
+        setTimeout(() => {
+            const enemyIndex = this.level.enemies.indexOf(enemy);
+            if (enemyIndex > -1) {
+                this.level.enemies.splice(enemyIndex, 1); // Remove enemy from the level after 1 second
+                console.log(`Enemy died, index: ${enemyIndex}`);
+            }
+        }, 1000); // 1 second delay for dead animation
     }
 
     checkCoinCollection() {
