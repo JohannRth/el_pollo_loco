@@ -7,10 +7,23 @@ body {
     background-size: cover;
     height: 100vh;
     margin: 0;
+    font-family: 'west', Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+    font-family: 'west';
+    src:url('fonts/west.ttf');
+}
+
+h1 {
+    font-size: 64px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
     background-color: black;
+    display: block;
     border-radius: 8px;
 }
 
@@ -19,4 +32,18 @@ canvas {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+    
+}
+
+@media only screen and (max-width: 480px) {
+    canvas {
+        height: 100vh;
+    }
+
 }

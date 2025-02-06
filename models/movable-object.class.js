@@ -5,6 +5,8 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    damageCooldown = 200; // 0.4 second cooldown
+    lastDamageTime = 0;
 
     offset = {
         top: 0,
@@ -51,7 +53,13 @@ class MovableObject extends DrawableObject {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+            this.lastDamageTime = this.lastHit; // Update last damage time
         }
+    }
+
+    canTakeDamage() {
+        let currentTime = new Date().getTime();
+        return currentTime - this.lastDamageTime >= this.damageCooldown;
     }
 
     isHurt() {
@@ -95,16 +103,3 @@ class MovableObject extends DrawableObject {
         this.speedY = 30;
     }
 }
-
-
-
-
-
-// if (Character.x + character.width > chicken.x && character.y + character.height > chicken.y && character.x < chicken.x && character.y < chicken.y + chicken.height) // Bessere Formel zur Kollisionsberechnung (Genauer)
-//     isColliding(obj) {
-//     return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
-//         (this.Y + this.offsetY + this.height) >= obj.Y &&
-//         (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
-//         obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-
-// }

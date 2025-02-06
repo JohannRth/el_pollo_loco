@@ -5,10 +5,10 @@ class Endboss extends MovableObject {
     y = 60;
 
     offset = {
-        left: 10,
-        right: 10,
-        top: 60,
-        bottom: 10
+        left: 30,
+        right: 30,
+        top: 80,
+        bottom: 40
     };
 
     IMAGES_WALKING = [

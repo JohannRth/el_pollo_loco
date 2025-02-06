@@ -75,16 +75,18 @@ class World {
         if (enemy instanceof Chicken) {
             damage = 5;
         } else if (enemy instanceof MiniChicken) {
-            damage = 2;
+            damage = 3;
         } else if (enemy instanceof Endboss) {
             damage = 10;
         } else {
             damage = 0; // Default damage
         }
 
-        this.character.hit(damage);
-        this.statusBar.setPercentage(this.character.energy);
-        console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}, damage: ${damage}`);
+        if (this.character.canTakeDamage()) {
+            this.character.hit(damage);
+            this.statusBar.setPercentage(this.character.energy);
+            console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}, damage: ${damage}`);
+        }
     }
 
     handleEnemyCollisionOnTop(enemy, index) {
