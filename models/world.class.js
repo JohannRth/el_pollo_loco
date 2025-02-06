@@ -34,6 +34,7 @@ class World {
             this.checkBottleCollection();
             this.checkEnemyCollisions();
             this.checkThrowObjects();
+            this.checkBottleHits();
         }, 50);
     }
 
@@ -125,6 +126,23 @@ class World {
                 this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
                 console.log(`Bottle collected, total: ${this.collectedBottles}`);
             }
+        });
+    }
+
+    checkBottleHits() {
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bottle.isColliding(enemy)) {
+                    enemy.hit(10); // Apply damage to enemy
+                    this.throwableObjects.splice(bottleIndex, 1); // Remove bottle after hit
+                    console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
+                    if (enemy.energy <= 0) {
+                        enemy.die();
+                        enemy.offset.top = 400; // Set offset to prevent further collisions
+                        this.scheduleEnemyRemoval(enemy);
+                    }
+                }
+            });
         });
     }
 
