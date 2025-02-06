@@ -132,18 +132,35 @@ class World {
     checkBottleHits() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
-                if (bottle.isColliding(enemy)) {
-                    enemy.hit(10); // Apply damage to enemy
-                    this.throwableObjects.splice(bottleIndex, 1); // Remove bottle after hit
-                    console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
-                    if (enemy.energy <= 0) {
-                        enemy.die();
-                        enemy.offset.top = 400; // Set offset to prevent further collisions
-                        this.scheduleEnemyRemoval(enemy);
-                    }
+                if (this.isBottleHittingEnemy(bottle, enemy)) {
+                    this.handleBottleHit(bottle, bottleIndex, enemy);
                 }
             });
         });
+    }
+
+    isBottleHittingEnemy(bottle, enemy) {
+        return bottle.isColliding(enemy) && !bottle.hasHit;
+    }
+
+    handleBottleHit(bottle, bottleIndex, enemy) {
+        enemy.hit(10); // Apply damage to enemy
+        bottle.startSplashAnimation(); // Start splash animation
+        console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
+        if (enemy.energy <= 0) {
+            enemy.die();
+            enemy.offset.top = 400; // Set offset to prevent further collisions
+            this.scheduleEnemyRemoval(enemy);
+        }
+        bottle.hasHit = true; // Mark bottle as hit
+        this.removeBottleAfterAnimation(bottleIndex);
+    }
+
+    removeBottleAfterAnimation(bottleIndex) {
+        setTimeout(() => {
+            this.throwableObjects.splice(bottleIndex, 1); // Remove bottle after splash animation completes
+            this.lastThrownBottle = null; // Allow throwing a new bottle
+        }, 600); // Duration of splash animation (6 frames * 100ms per frame)
     }
 
     draw() {
