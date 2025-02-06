@@ -51,8 +51,8 @@ class MovableObject extends DrawableObject {
         return isOnTop && isHorizontallyAligned && isFalling;
     }
 
-    hit() {
-        this.energy -= 5;
+    hit(damage = 1) {
+        this.energy -= damage;
 
         if (this.energy < 0) {
             this.energy = 0;

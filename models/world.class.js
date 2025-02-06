@@ -45,7 +45,7 @@ class World {
 
     throwBottle() {
         const bottleX = this.character.x + (this.character.otherDirection ? -50 : 50);
-        const bottleY = this.character.y + 50;
+        const bottleY = this.character.y + 100;
         const bottle = new ThrowableObject(bottleX, bottleY, this.character.otherDirection);
         this.throwableObjects.push(bottle);
         this.collectedBottles -= 1; // Decrement collected bottles
@@ -70,10 +70,20 @@ class World {
     }
 
     handleEnemyCollision(enemy, index) {
-        // Charakter kollidiert mit dem Feind
-        this.character.hit();
+        let damage;
+        if (enemy instanceof Chicken) {
+            damage = 5;
+        } else if (enemy instanceof MiniChicken) {
+            damage = 2;
+        } else if (enemy instanceof Endboss) {
+            damage = 10;
+        } else {
+            damage = 0; // Default damage
+        }
+
+        this.character.hit(damage);
         this.statusBar.setPercentage(this.character.energy);
-        console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}`);
+        console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}, damage: ${damage}`);
     }
 
     handleEnemyCollisionOnTop(enemy, index) {

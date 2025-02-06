@@ -1,9 +1,9 @@
 const level1 = new Level(
     [
         new Chicken(450, 380),
-        new MiniChicken(600, 400),
+        new MiniChicken(600, 392),
         new Chicken(700, 380),
-        new MiniChicken(850, 400),
+        new MiniChicken(850, 392),
         new Chicken(1050, 380),
         new Chicken(1350, 380),
         new Chicken(1550, 380),
