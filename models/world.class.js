@@ -39,14 +39,20 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles > 0 && this.canThrowBottle()) {
-            let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 50);
-            this.throwableObjects.push(bottle);
-            this.collectedBottles -= 1; // Decrement collected bottles
-            this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
-            this.lastThrownBottle = bottle; // Set the last thrown bottle
-            bottle.animate(); // Start bottle animation
-            console.log(`Bottle thrown, remaining: ${this.collectedBottles}`);
+            this.throwBottle();
         }
+    }
+
+    throwBottle() {
+        const bottleX = this.character.x + (this.character.otherDirection ? -50 : 50);
+        const bottleY = this.character.y + 50;
+        const bottle = new ThrowableObject(bottleX, bottleY, this.character.otherDirection);
+        this.throwableObjects.push(bottle);
+        this.collectedBottles -= 1; // Decrement collected bottles
+        this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
+        this.lastThrownBottle = bottle; // Set the last thrown bottle
+        bottle.animate(); // Start bottle animation
+        console.log(`Bottle thrown, remaining: ${this.collectedBottles}`);
     }
 
     canThrowBottle() {
