@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     damageCooldown = 200; // 0.4 second cooldown
     lastDamageTime = 0;
+    bossIsActivated = false;
 
     offset = {
         top: 0,
@@ -82,6 +83,13 @@ class MovableObject extends DrawableObject {
         this.energy = 0;
         this.speed = 0; // Stop enemy movement
         this.isDead = true; // Mark the object as dead
+    }
+
+    activateBoss() {
+        if (!this.bossIsActivated) {
+            this.bossIsActivated = true;
+        }
+        return this.bossIsActivated;
     }
 
     playAnimation(images) {

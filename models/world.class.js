@@ -35,6 +35,7 @@ class World {
             this.checkEnemyCollisions();
             this.checkThrowObjects();
             this.checkBottleHits();
+            this.checkBossActivation();
         }, 50);
     }
 
@@ -163,6 +164,14 @@ class World {
             this.throwableObjects.splice(bottleIndex, 1); // Remove bottle after splash animation completes
             this.lastThrownBottle = null; // Allow throwing a new bottle
         }, 600); // Duration of splash animation (6 frames * 100ms per frame)
+    }
+
+    checkBossActivation() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss && this.character.x > enemy.x - 500) {
+                enemy.activateBossWithAlert();
+            }
+        });
     }
 
     draw() {
