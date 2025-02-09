@@ -2,6 +2,7 @@ class Endboss extends MovableObject {
     energy = 50;
     height = 400;
     width = 250;
+    x = 2200;
     y = 60;
 
     offset = {
@@ -29,6 +30,17 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/1_walk/G4.png',
     ];
 
+    IMIMAGES_ATTACK = [
+        'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png',
+    ];
+
     IMAGES_HURT = [
         'img/4_enemie_boss_chicken/4_hurt/G21.png',
         'img/4_enemie_boss_chicken/4_hurt/G22.png',
@@ -41,13 +53,14 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
-    constructor(){
+    constructor(x, y){
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 2500;
+        this.x = x;
+        this.y = y;
         this.alertPlayedOff = false; // Initialize alertPlayedOff property
         this.animate();
     }
