@@ -53,6 +53,8 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    statusBarEndboss = new StatusBarEndboss();
+
     constructor(x, y){
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
@@ -62,7 +64,18 @@ class Endboss extends MovableObject {
         this.x = x;
         this.y = y;
         this.alertPlayedOff = false; // Initialize alertPlayedOff property
+        this.statusBarEndboss.setPercentage(this.energy);
         this.animate();
+    }
+
+    hit(damage = 1) {
+        this.energy -= damage;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+        this.statusBarEndboss.setPercentage(this.energy);
     }
 
     animate() {

@@ -8,6 +8,7 @@ class World {
     statusBar = new StatusBar(); // Bestehende Status-Bar für Gesundheit
     statusBarCoins = new CoinStatusBar(); // Neue Status-Bar für Coins
     statusBarBottles = new BottleStatusBar(); // Neue Status-Bar für Bottles
+    statusBarEndboss = new StatusBarEndboss(); // Neue Status-Bar für Endboss
     coins = new Coin();
     bottles = new Bottle();
     throwableObjects = [];
@@ -193,6 +194,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
+        this.addToMap(this.statusBarEndboss); // Status-Bar für Endboss hinzufügen
 
         this.ctx.translate(this.camera_x, 0); // Forwards
 
