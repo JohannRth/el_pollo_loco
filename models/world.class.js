@@ -174,6 +174,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof Endboss && this.character.x > enemy.x - 500) {
                 enemy.activateBossWithAlert();
+                this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
             }
         });
     }
@@ -197,7 +198,9 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
-        this.addToMap(this.statusBarEndboss); // Status-Bar für Endboss hinzufügen
+        if (this.level.enemies.some(enemy => enemy instanceof Endboss && enemy.bossIsActivated)) {
+            this.addToMap(this.statusBarEndboss); // Status-Bar für Endboss hinzufügen, wenn aktiviert
+        }
 
         this.ctx.translate(this.camera_x, 0); // Forwards
 
