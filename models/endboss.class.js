@@ -1,5 +1,5 @@
 class Endboss extends MovableObject {
-    energy = 50;
+    energy = 100;
     height = 400;
     width = 250;
     x = 2200;
@@ -69,12 +69,7 @@ class Endboss extends MovableObject {
     }
 
     hit(damage = 1) {
-        this.energy -= damage;
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-        }
+        super.hit(damage);
         this.statusBarEndboss.setPercentage(this.energy);
     }
 

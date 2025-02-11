@@ -148,9 +148,12 @@ class World {
     }
 
     handleBottleHit(bottle, bottleIndex, enemy) {
-        enemy.hit(10); // Apply damage to enemy
+        enemy.hit(20); // Apply damage to enemy
         bottle.startSplashAnimation(); // Start splash animation
         console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
+        if (enemy instanceof Endboss) {
+            this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
+        }
         if (enemy.energy <= 0) {
             enemy.die();
             enemy.offset.top = 400; // Set offset to prevent further collisions
