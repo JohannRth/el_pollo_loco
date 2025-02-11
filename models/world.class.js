@@ -80,6 +80,7 @@ class World {
             damage = 3;
         } else if (enemy instanceof Endboss) {
             damage = 10;
+            this.character.knockback(); // Character führt Rückstoß aus
         } else {
             damage = 0; // Default damage
         }

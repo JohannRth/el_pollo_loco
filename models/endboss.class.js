@@ -102,4 +102,20 @@ class Endboss extends MovableObject {
             }, 1000); // Duration of alert animation
         }
     }
+
+    knockback() {
+        let distance = 200; // Gesamtstrecke des Rückstoßes
+        let steps = 10; // Anzahl der Schritte
+        let stepSize = distance / steps; // Wie viel pro Schritt bewegt wird
+        let step = 0;
+
+        let interval = setInterval(() => {
+            if (step < steps) {
+                this.x -= stepSize;
+                step++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 20); // Alle 20ms bewegen
+    }
 }
