@@ -30,7 +30,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/1_walk/G4.png',
     ];
 
-    IMIMAGES_ATTACK = [
+    IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
         'img/4_enemie_boss_chicken/3_attack/G14.png',
         'img/4_enemie_boss_chicken/3_attack/G15.png',
@@ -54,6 +54,7 @@ class Endboss extends MovableObject {
     ];
 
     statusBarEndboss = new StatusBarEndboss();
+    isAttacking = false;
 
     constructor(x, y){
         super().loadImage(this.IMAGES_ALERT[0]);
@@ -61,6 +62,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_ATTACK);
         this.x = x;
         this.y = y;
         this.alertPlayedOff = false; // Initialize alertPlayedOff property
@@ -81,6 +83,8 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (!this.alertPlayedOff) {
                 this.playAnimation(this.IMAGES_ALERT);
+            } else if (this.isAttacking) {
+                this.playAnimation(this.IMAGES_ATTACK);
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }

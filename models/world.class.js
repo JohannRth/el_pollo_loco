@@ -173,9 +173,16 @@ class World {
 
     checkBossActivation() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy instanceof Endboss && this.character.x > enemy.x - 500) {
-                enemy.activateBossWithAlert();
-                this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
+            if (enemy instanceof Endboss) {
+                if (this.character.x > enemy.x - 500) {
+                    enemy.activateBossWithAlert();
+                    this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
+                }
+                if (this.character.x > enemy.x - 100 && this.character.x < enemy.x + 100) {
+                    enemy.isAttacking = true; // Set isAttacking to true when the character is very close to the endboss
+                } else {
+                    enemy.isAttacking = false; // Set isAttacking to false when the character is not very close to the endboss
+                }
             }
         });
     }
