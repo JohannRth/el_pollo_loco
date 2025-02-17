@@ -49,42 +49,30 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
+function addEventListeners(buttonId, key) {
+    const button = document.getElementById(buttonId);
+    button.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard[key] = true;
+    });
+    button.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard[key] = false;
+    });
+    button.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        keyboard[key] = true;
+    });
+    button.addEventListener('mouseup', (e) => {
+        e.preventDefault();
+        keyboard[key] = false;
+    });
+}
+
 function addTouchListeners() {
-    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.LEFT = true;
-    });
-    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.LEFT = false;
-    });
-
-    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = true;
-    });
-    document.getElementById('btnRight').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = false;
-    });
-
-    document.getElementById('btnJump').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.SPACE = true;
-        keyboard.UP = true;
-    });
-    document.getElementById('btnJump').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.SPACE = false;
-        keyboard.UP = false;
-    });
-
-    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.D = true;
-    });
-    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.D = false;
-    });
+    addEventListeners('btnLeft', 'LEFT');
+    addEventListeners('btnRight', 'RIGHT');
+    addEventListeners('btnJump', 'SPACE');
+    addEventListeners('btnJump', 'UP');
+    addEventListeners('btnThrow', 'D');
 }
