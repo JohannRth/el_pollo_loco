@@ -10,7 +10,7 @@ function init() {
 }
 
 function showMenu() {
-    document.getElementById('menu').style.display = 'block';
+    document.getElementById('menu').style.display = 'flex';
     document.getElementById('game').style.display = 'none';
     document.getElementById('instructions').style.display = 'none';
     document.getElementById('imprint').style.display = 'none';
@@ -18,16 +18,17 @@ function showMenu() {
 
 function startGame() {
     document.getElementById('menu').style.display = 'none';
-    document.getElementById('game').style.display = 'block';
+    document.getElementById('game').style.display = 'flex';
+    initLevel();
     init();
 }
 
 function showInstructions() {
     document.getElementById('menu').style.display = 'none';
-    document.getElementById('instructions').style.display = 'block';
+    document.getElementById('instructions').style.display = 'flex';
 }
 
 function showImprint() {
     document.getElementById('menu').style.display = 'none';
-    document.getElementById('imprint').style.display = 'block';
+    document.getElementById('imprint').style.display = 'flex';
 }
