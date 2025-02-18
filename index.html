@@ -30,10 +30,10 @@
 
 <body onload="showMenu()">
 
-    <div id="menu" class="menu-container" style="background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');">
-        <button onclick="startGame()">Start Game</button>
-        <button onclick="showInstructions()">Instructions</button>
-        <button onclick="showImprint()">Imprint</button>
+    <div id="menu" class="menu-container">
+        <button class="btn" onclick="startGame()">Start Game</button>
+        <button class="btn" onclick="showInstructions()">Instructions</button>
+        <button class="btn" onclick="showImprint()">Imprint</button>
     </div>
 
     <div id="game" class="game-container" style="display: none;">
@@ -61,13 +61,13 @@
             <li>Up Arrow or Space: Jump</li>
             <li>D: Throw Bottle</li>
         </ul>
-        <button onclick="showMenu()">Back to Menu</button>
+        <button class="btn" onclick="showMenu()">Back to Menu</button>
     </div>
 
     <div id="imprint" class="imprint-container" style="display: none;">
         <h1>Imprint</h1>
         <p>Here you can add your personal information or legal notice.</p>
-        <button onclick="showMenu()">Back to Menu</button>
+        <button class="btn" onclick="showMenu()">Back to Menu</button>
     </div>
 
 </body>
