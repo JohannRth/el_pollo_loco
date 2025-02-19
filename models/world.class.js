@@ -108,6 +108,9 @@ class World {
             if (enemyIndex > -1) {
                 this.level.enemies.splice(enemyIndex, 1); // Remove enemy from the level after 1 second
                 console.log(`Enemy died, index: ${enemyIndex}`);
+                if (enemy instanceof Endboss) {
+                    win(); // Show win overlay if the endboss is defeated
+                }
             }
         }, 1000); // 1 second delay for dead animation
     }

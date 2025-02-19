@@ -51,7 +51,6 @@ canvas {
     height: 480px;
     border-radius: 8px;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
-    /* background-image: url('img/9_intro_outro_screens/start/startscreen_1.png'); */
     background-size: cover;
     background-position: center;
     object-fit: fill;
@@ -89,6 +88,33 @@ canvas {
 
 .imprint-container {
     font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+.win-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 720px;
+    height: 480px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.win-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.win-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .overlay {

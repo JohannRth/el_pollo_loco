@@ -14,6 +14,7 @@ function showMenu() {
     document.getElementById('game').style.display = 'none';
     document.getElementById('instructions').style.display = 'none';
     document.getElementById('imprint').style.display = 'none';
+    document.getElementById('win').style.display = 'none';
 }
 
 function startGame() {
@@ -31,4 +32,18 @@ function showInstructions() {
 function showImprint() {
     document.getElementById('menu').style.display = 'none';
     document.getElementById('imprint').style.display = 'flex';
+}
+
+function win() {
+    document.getElementById('win').style.display = 'flex';
+}
+
+function playAgain() {
+    document.getElementById('win').style.display = 'none';
+    startGame();
+}
+
+function backToMenu() {
+    document.getElementById('win').style.display = 'none';
+    showMenu();
 }

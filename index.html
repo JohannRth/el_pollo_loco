@@ -35,7 +35,7 @@
         <div class="menu-content">
             <button class="btn" onclick="startGame()">Start Game</button>
             <button class="btn" onclick="showInstructions()">Instructions</button>
-            <button class="btn" onclick="showImprint()">Imprint</button>
+            <button class="btn" onclick="showImprint()">Impressum</button>
         </div>
     </div>
 
@@ -43,9 +43,8 @@
         <canvas id="canvas" width="720" height="480"></canvas>
         <div class="panel-below">
             <div class="panel-below-left">
-                <button id="btnLeft" class="btn">
-                    < </button>
-                        <button id="btnRight" class="btn">></button>
+                <button id="btnLeft" class="btn"><</button>
+                <button id="btnRight" class="btn">></button>
             </div>
             <div class="panel-below-right">
                 <button id="btnThrow" class="btn">THROW</button>
@@ -58,18 +57,26 @@
         <h1>Instructions</h1>
         <p>Use the following keys to control the character:</p>
         <ul>
-            <li>Left Arrow:   Move Left</li>
-            <li>Right Arrow:   Move Right</li>
-            <li>Up Arrow or Space:   Jump</li>
-            <li>D:   Throw Bottle</li>
+            <li>Left Arrow: Move Left</li>
+            <li>Right Arrow: Move Right</li>
+            <li>Up Arrow or Space: Jump</li>
+            <li>D: Throw Bottle</li>
         </ul>
         <button class="btn" onclick="showMenu()">Back to Menu</button>
     </div>
 
     <div id="imprint" class="imprint-container" style="display: none;">
-        <h1>Imprint</h1>
+        <h1>Impressum</h1>
         <p>Here you can add your personal information or legal notice.</p>
         <button class="btn" onclick="showMenu()">Back to Menu</button>
+    </div>
+
+    <div id="win" class="win-container" style="display: none;">
+        <img src="img/9_intro_outro_screens/win/win_2.png" alt="Win Image" class="win-image">
+        <div class="win-buttons">
+            <button class="btn" onclick="playAgain()">Play Again</button>
+            <button class="btn" onclick="backToMenu()">Back to Menu</button>
+        </div>
     </div>
 
 </body>
