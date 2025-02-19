@@ -31,17 +31,21 @@
 <body onload="showMenu()">
 
     <div id="menu" class="menu-container">
-        <button class="btn" onclick="startGame()">Start Game</button>
-        <button class="btn" onclick="showInstructions()">Instructions</button>
-        <button class="btn" onclick="showImprint()">Imprint</button>
+        <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Background Image" class="background-image">
+        <div class="menu-content">
+            <button class="btn" onclick="startGame()">Start Game</button>
+            <button class="btn" onclick="showInstructions()">Instructions</button>
+            <button class="btn" onclick="showImprint()">Imprint</button>
+        </div>
     </div>
 
     <div id="game" class="game-container" style="display: none;">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div class="panel-below">
             <div class="panel-below-left">
-                <button id="btnLeft" class="btn"><</button>
-                <button id="btnRight" class="btn">></button>
+                <button id="btnLeft" class="btn">
+                    < </button>
+                        <button id="btnRight" class="btn">></button>
             </div>
             <div class="panel-below-right">
                 <button id="btnThrow" class="btn">THROW</button>
@@ -54,10 +58,10 @@
         <h1>Instructions</h1>
         <p>Use the following keys to control the character:</p>
         <ul>
-            <li>Left Arrow: Move Left</li>
-            <li>Right Arrow: Move Right</li>
-            <li>Up Arrow or Space: Jump</li>
-            <li>D: Throw Bottle</li>
+            <li>Left Arrow:   Move Left</li>
+            <li>Right Arrow:   Move Right</li>
+            <li>Up Arrow or Space:   Jump</li>
+            <li>D:   Throw Bottle</li>
         </ul>
         <button class="btn" onclick="showMenu()">Back to Menu</button>
     </div>

@@ -42,19 +42,34 @@ canvas {
 }
 
 .menu-container {
+    position: absolute;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-evenly;
-    padding-bottom: 12px;
     width: 720px;
     height: 480px;
     border-radius: 8px;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
-    background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
+    /* background-image: url('img/9_intro_outro_screens/start/startscreen_1.png'); */
     background-size: cover;
     background-position: center;
     object-fit: fill;
+}
+
+.menu-content {
+    width: 100%;
+    margin-bottom: 12px;
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: 8px;
 }
 
 .instructions-container, .imprint-container {
@@ -64,9 +79,16 @@ canvas {
     justify-content: center;
     width: 720px;
     height: 480px;
-    background-color: white;
+    background-color: rgba(255, 176, 72, 0.89);
     border-radius: 8px;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
+    scrollbar-width: none;
+    z-index: 5;
+    overflow: auto;
+}
+
+.imprint-container {
+    font-family: Georgia, 'Times New Roman', Times, serif
 }
 
 .overlay {
@@ -99,10 +121,10 @@ canvas {
     line-height: 1;
     text-decoration: none;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 24px;
     border-radius: 16px;
     height: 30px;
-    font-weight: bold;
+    font-family: 'west', Arial, Helvetica, sans-serif;
     border: 3px outset #ff8100;
     transition: 0.3s;
     box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.5);
@@ -129,6 +151,11 @@ canvas {
         width: 100%;
         height: 100%;
         object-fit: fill;
+    }
+
+    .game-container {
+        width: unset;
+        height: unset;
     }
     
 }
