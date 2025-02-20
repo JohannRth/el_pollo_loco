@@ -34,14 +34,18 @@ class World {
     run() {
         this.gameInterval = setInterval(() => {
             if (!this.gamePaused) {
-                this.checkCoinCollection();
-                this.checkBottleCollection();
-                this.checkEnemyCollisions();
-                this.checkThrowObjects();
-                this.checkBottleHits();
-                this.checkBossActivation();
+                this.updateGame();
             }
         }, 50);
+    }
+
+    updateGame() {
+        this.checkCoinCollection();
+        this.checkBottleCollection();
+        this.checkEnemyCollisions();
+        this.checkThrowObjects();
+        this.checkBottleHits();
+        this.checkBossActivation();
     }
 
     pauseGame() {
@@ -68,16 +72,9 @@ class World {
     }
 
     throwBottle() {
-        const bottleX = this.character.x + (this.character.otherDirection ? -50 : 50);
-        const bottleY = this.character.y + 100;
-        const bottle = new ThrowableObject(bottleX, bottleY, this.character.otherDirection);
+        const bottle = ThrowableObject.throwBottle(this.character, this.collectedBottles, this.statusBarBottles, this.soundManager);
         this.throwableObjects.push(bottle);
-        this.collectedBottles -= 1; // Decrement collected bottles
-        this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
         this.lastThrownBottle = bottle; // Set the last thrown bottle
-        bottle.animate(); // Start bottle animation
-        this.soundManager.play('throw');
-        console.log(`Bottle thrown, remaining: ${this.collectedBottles}`);
     }
 
     canThrowBottle() {
@@ -95,18 +92,7 @@ class World {
     }
 
     handleEnemyCollision(enemy, index) {
-        let damage;
-        if (enemy instanceof Chicken) {
-            damage = 5;
-        } else if (enemy instanceof MiniChicken) {
-            damage = 3;
-        } else if (enemy instanceof Endboss) {
-            damage = 10;
-            this.character.knockback(); // Character führt Rückstoß aus
-        } else {
-            damage = 0; // Default damage
-        }
-
+        let damage = this.calculateDamage(enemy);
         if (this.character.canTakeDamage()) {
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
@@ -115,6 +101,19 @@ class World {
             if (this.character.isDead()) {
                 this.gameOver(); // Spiel beenden, wenn der Charakter stirbt
             }
+        }
+    }
+
+    calculateDamage(enemy) {
+        if (enemy instanceof Chicken) {
+            return 5;
+        } else if (enemy instanceof MiniChicken) {
+            return 3;
+        } else if (enemy instanceof Endboss) {
+            this.character.knockback(); // Character führt Rückstoß aus
+            return 10;
+        } else {
+            return 0; // Default damage
         }
     }
 
@@ -146,25 +145,33 @@ class World {
     checkCoinCollection() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-                this.level.coins.splice(index, 1); // Remove coin from the level
-                this.collectedCoins += 1; // Increment collected coins
-                this.statusBarCoins.setPercentage(this.collectedCoins * 20); // Update coin status bar
-                this.soundManager.play('coin');
-                console.log(`Coin collected, total: ${this.collectedCoins}`);
+                this.collectCoin(index);
             }
         });
+    }
+
+    collectCoin(index) {
+        this.level.coins.splice(index, 1); // Remove coin from the level
+        this.collectedCoins += 1; // Increment collected coins
+        this.statusBarCoins.setPercentage(this.collectedCoins * 20); // Update coin status bar
+        this.soundManager.play('coin');
+        console.log(`Coin collected, total: ${this.collectedCoins}`);
     }
 
     checkBottleCollection() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.level.bottles.splice(index, 1); // Remove bottle from the level
-                this.collectedBottles += 1; // Increment collected bottles
-                this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
-                this.soundManager.play('bottle');
-                console.log(`Bottle collected, total: ${this.collectedBottles}`);
+                this.collectBottle(index);
             }
         });
+    }
+
+    collectBottle(index) {
+        this.level.bottles.splice(index, 1); // Remove bottle from the level
+        this.collectedBottles += 1; // Increment collected bottles
+        this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
+        this.soundManager.play('bottle');
+        console.log(`Bottle collected, total: ${this.collectedBottles}`);
     }
 
     checkBottleHits() {
@@ -207,17 +214,21 @@ class World {
     checkBossActivation() {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof Endboss) {
-                if (this.character.x > enemy.x - 500) {
-                    enemy.activateBossWithAlert();
-                    this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
-                }
-                if (this.character.x > enemy.x - 100 && this.character.x < enemy.x + 100) {
-                    enemy.isAttacking = true; // Set isAttacking to true when the character is very close to the endboss
-                } else {
-                    enemy.isAttacking = false; // Set isAttacking to false when the character is not very close to the endboss
-                }
+                this.activateBossIfNeeded(enemy);
             }
         });
+    }
+
+    activateBossIfNeeded(enemy) {
+        if (this.character.x > enemy.x - 500) {
+            enemy.activateBossWithAlert();
+            this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
+        }
+        if (this.character.x > enemy.x - 100 && this.character.x < enemy.x + 100) {
+            enemy.isAttacking = true; // Set isAttacking to true when the character is very close to the endboss
+        } else {
+            enemy.isAttacking = false; // Set isAttacking to false when the character is not very close to the endboss
+        }
     }
 
     draw() {

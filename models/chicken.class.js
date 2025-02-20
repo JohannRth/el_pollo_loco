@@ -1,4 +1,6 @@
 class Chicken extends MovableObject {
+    soundManager = new SoundManager();
+
     y = 380;
     height = 60;
     width = 60;

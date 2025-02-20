@@ -73,4 +73,16 @@ class ThrowableObject extends MovableObject {
             }
         }, 100);
     }
+
+    static throwBottle(character, collectedBottles, statusBarBottles, soundManager) {
+        const bottleX = character.x + (character.otherDirection ? -50 : 50);
+        const bottleY = character.y + 100;
+        const bottle = new ThrowableObject(bottleX, bottleY, character.otherDirection);
+        collectedBottles -= 1; // Decrement collected bottles
+        statusBarBottles.setPercentage(collectedBottles * 20); // Update bottle status bar
+        bottle.animate(); // Start bottle animation
+        soundManager.play('throw');
+        console.log(`Bottle thrown, remaining: ${collectedBottles}`);
+        return bottle;
+    }
 }

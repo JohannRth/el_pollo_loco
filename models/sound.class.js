@@ -9,6 +9,7 @@ class SoundManager {
             bottle: new Audio('audio/bottle.mp3'),
             bottleBreak: new Audio('audio/bottle_break.mp3'),
             throw: new Audio('audio/throw.mp3'),
+            chickenDead: new Audio('audio/chicken_dead.mp3'),
             bossAlert: new Audio('audio/boss_alert.mp3'),
             bossHurt: new Audio('audio/boss_hurt.mp3'),
             bossDead: new Audio('audio/boss_dead.mp3'),
