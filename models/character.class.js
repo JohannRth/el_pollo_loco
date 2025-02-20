@@ -77,7 +77,7 @@ class Character extends MovableObject {
 
     world;
     walking_sound = new Audio('audio/running.mp3')
-
+    soundManager = new SoundManager();
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
@@ -104,21 +104,22 @@ class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.walking_sound.pause();
+            this.soundManager.pause('walking');
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                this.soundManager.play('walking');
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                this.soundManager.play('walking');
             }
 
             if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.soundManager.play('jump');
             }
 
             this.world.camera_x = -this.x + 100;
@@ -126,8 +127,10 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
+                this.soundManager.play('dead');
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
+                this.soundManager.play('hurt');
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);

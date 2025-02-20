@@ -16,6 +16,7 @@ class World {
     collectedBottles = 0; // Track collected bottles
     lastThrownBottle = null; // Track the last thrown bottle
     gamePaused = false; // Neue Variable zum Überprüfen, ob das Spiel pausiert ist
+    soundManager = new SoundManager();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -55,6 +56,7 @@ class World {
 
     gameOver() {
         this.pauseGame();
+        this.soundManager.play('gameOver');
         document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/game_over/game over.png';
         document.getElementById('win-loose').style.display = 'flex';
     }
@@ -74,6 +76,7 @@ class World {
         this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
         this.lastThrownBottle = bottle; // Set the last thrown bottle
         bottle.animate(); // Start bottle animation
+        this.soundManager.play('throw');
         console.log(`Bottle thrown, remaining: ${this.collectedBottles}`);
     }
 
@@ -132,6 +135,7 @@ class World {
                 console.log(`Enemy died, index: ${enemyIndex}`);
                 if (enemy instanceof Endboss) {
                     this.pauseGame(); // Spiel pausieren, wenn der Endboss besiegt ist
+                    this.soundManager.play('bossDead');
                     win(); // Show win overlay if the endboss is defeated
                 }
             }
@@ -144,6 +148,7 @@ class World {
                 this.level.coins.splice(index, 1); // Remove coin from the level
                 this.collectedCoins += 1; // Increment collected coins
                 this.statusBarCoins.setPercentage(this.collectedCoins * 20); // Update coin status bar
+                this.soundManager.play('coin');
                 console.log(`Coin collected, total: ${this.collectedCoins}`);
             }
         });
@@ -155,6 +160,7 @@ class World {
                 this.level.bottles.splice(index, 1); // Remove bottle from the level
                 this.collectedBottles += 1; // Increment collected bottles
                 this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
+                this.soundManager.play('bottle');
                 console.log(`Bottle collected, total: ${this.collectedBottles}`);
             }
         });
