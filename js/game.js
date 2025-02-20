@@ -14,7 +14,7 @@ function showMenu() {
     document.getElementById('game').style.display = 'none';
     document.getElementById('instructions').style.display = 'none';
     document.getElementById('imprint').style.display = 'none';
-    document.getElementById('win').style.display = 'none';
+    document.getElementById('win-loose').style.display = 'none';
 }
 
 function startGame() {
@@ -36,15 +36,22 @@ function showImprint() {
 
 function win() {
     world.pauseGame(); // Spiel pausieren
-    document.getElementById('win').style.display = 'flex';
+    document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/win/win_2.png';
+    document.getElementById('win-loose').style.display = 'flex';
+}
+
+function gameOver() {
+    world.pauseGame(); // Spiel pausieren
+    document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/game_over/game over.png';
+    document.getElementById('win-loose').style.display = 'flex';
 }
 
 function playAgain() {
-    document.getElementById('win').style.display = 'none';
+    document.getElementById('win-loose').style.display = 'none';
     startGame();
 }
 
 function backToMenu() {
-    document.getElementById('win').style.display = 'none';
+    document.getElementById('win-loose').style.display = 'none';
     showMenu();
 }

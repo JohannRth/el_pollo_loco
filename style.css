@@ -90,7 +90,7 @@ canvas {
     font-family: Georgia, 'Times New Roman', Times, serif
 }
 
-.win-container {
+.win-loose-container {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -104,13 +104,13 @@ canvas {
     z-index: 10;
 }
 
-.win-image {
+.win-loose-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.win-buttons {
+.win-loose-buttons {
     display: flex;
     justify-content: space-evenly;
     width: 100%;

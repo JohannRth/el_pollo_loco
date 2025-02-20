@@ -53,6 +53,12 @@ class World {
         this.run(); // Restart the game loop
     }
 
+    gameOver() {
+        this.pauseGame();
+        document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/game_over/game over.png';
+        document.getElementById('win-loose').style.display = 'flex';
+    }
+
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles > 0 && this.canThrowBottle()) {
             this.throwBottle();
@@ -102,6 +108,9 @@ class World {
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
             console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}, damage: ${damage}`);
+            if (this.character.isDead()) {
+                this.gameOver(); // Spiel beenden, wenn der Charakter stirbt
+            }
         }
     }
 

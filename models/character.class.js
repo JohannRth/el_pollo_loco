@@ -91,6 +91,17 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    isDead() {
+        return this.energy <= 0;
+    }
+
+    reset() {
+        this.energy = 100;
+        this.isDead = false;
+        this.x = 120;
+        this.y = 280;
+    }
+
     animate() {
         setInterval(() => {
             this.walking_sound.pause();
