@@ -7,6 +7,7 @@ class SoundManager {
             dead: new Audio('audio/dead.mp3'),
             coin: new Audio('audio/coin.mp3'),
             bottle: new Audio('audio/bottle.mp3'),
+            bottleBreak: new Audio('audio/bottle_break.mp3'),
             throw: new Audio('audio/throw.mp3'),
             bossAlert: new Audio('audio/boss_alert.mp3'),
             bossHurt: new Audio('audio/boss_hurt.mp3'),
@@ -14,21 +15,27 @@ class SoundManager {
             win: new Audio('audio/win.mp3'),
             gameOver: new Audio('audio/game_over.mp3')
         };
+        this.lastPlayed = {}; // Track the last played time for each sound
     }
 
-    play(soundName) {
+    play(soundName, cooldown = 1000) {
+        const currentTime = new Date().getTime();
         if (this.sounds[soundName]) {
-            this.sounds[soundName].play();
+            if (!this.lastPlayed[soundName] || currentTime - this.lastPlayed[soundName] >= cooldown) {
+                this.sounds[soundName].currentTime = 0; // Reset the sound to the beginning
+                this.sounds[soundName].play();
+                this.lastPlayed[soundName] = currentTime; // Update the last played time
+            }
         } else {
             console.error(`Sound ${soundName} not found`);
         }
     }
 
     pause(soundName) {
-        if (this.sounds[soundName]) {
+        if (this.sounds[soundName] && !this.sounds[soundName].paused) {
             this.sounds[soundName].pause();
         } else {
-            console.error(`Sound ${soundName} not found`);
+            console.error(`Sound ${soundName} not found or already paused`);
         }
     }
 

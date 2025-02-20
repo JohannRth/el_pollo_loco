@@ -53,6 +53,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    soundManager = new SoundManager();
     statusBarEndboss = new StatusBarEndboss();
     isAttacking = false;
 
@@ -71,6 +72,7 @@ class Endboss extends MovableObject {
     }
 
     hit(damage = 1) {
+        this.soundManager.play('bossHurt', 1000);
         super.hit(damage);
         this.statusBarEndboss.setPercentage(this.energy);
     }
@@ -99,6 +101,7 @@ class Endboss extends MovableObject {
 
     activateBossWithAlert() {
         if (!this.bossIsActivated) {
+            this.soundManager.play('bossAlert', 1000);
             this.playAnimation(this.IMAGES_ALERT);
             setTimeout(() => {
                 this.bossIsActivated = this.activateBoss();

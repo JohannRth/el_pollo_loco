@@ -111,6 +111,7 @@ class World {
             this.character.hit(damage);
             this.statusBar.setPercentage(this.character.energy);
             console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}, damage: ${damage}`);
+            this.soundManager.play('hurt', 1000); // Play hurt sound with a cooldown of 1000ms
             if (this.character.isDead()) {
                 this.gameOver(); // Spiel beenden, wenn der Charakter stirbt
             }

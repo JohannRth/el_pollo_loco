@@ -1,4 +1,6 @@
 class ThrowableObject extends MovableObject {
+    soundManager = new SoundManager();
+
     BOTTLE_ROTATION = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -61,6 +63,7 @@ class ThrowableObject extends MovableObject {
     }
 
     playSplashAnimation() {
+        this.soundManager.play('bottleBreak', 1000);
         this.currentImage = 0; // Reset animation frame
         this.animateInterval = setInterval(() => {
             this.playAnimation(this.BOTTLE_SPLASH);

@@ -76,7 +76,7 @@ class Character extends MovableObject {
     ];
 
     world;
-    walking_sound = new Audio('audio/running.mp3')
+    walking_sound = new Audio('audio/running.mp3');
     soundManager = new SoundManager();
 
     constructor() {
@@ -104,22 +104,20 @@ class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.soundManager.pause('walking');
+            this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.soundManager.play('walking');
-            }
-
-            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.walking_sound.play(); // Play walking sound without cooldown
+            } else if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.soundManager.play('walking');
+                this.walking_sound.play(); // Play walking sound without cooldown
             }
 
             if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
-                this.soundManager.play('jump');
+                this.soundManager.play('jump', 1000); // Play jump sound with a cooldown of 1000ms
             }
 
             this.world.camera_x = -this.x + 100;
@@ -127,10 +125,10 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.soundManager.play('dead');
+                this.soundManager.play('dead', 200000); // Play dead sound with a cooldown of 200000ms
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
-                this.soundManager.play('hurt');
+                this.soundManager.play('hurt', 1000); // Play hurt sound with a cooldown of 1000ms
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
