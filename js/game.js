@@ -35,6 +35,7 @@ function showImprint() {
 }
 
 function win() {
+    world.pauseGame(); // Spiel pausieren
     document.getElementById('win').style.display = 'flex';
 }
 

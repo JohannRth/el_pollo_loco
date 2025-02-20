@@ -15,6 +15,7 @@ class World {
     collectedCoins = 0; // Track collected coins
     collectedBottles = 0; // Track collected bottles
     lastThrownBottle = null; // Track the last thrown bottle
+    gamePaused = false; // Neue Variable zum Überprüfen, ob das Spiel pausiert ist
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -30,14 +31,26 @@ class World {
     }
 
     run() {
-        setInterval(() => {
-            this.checkCoinCollection();
-            this.checkBottleCollection();
-            this.checkEnemyCollisions();
-            this.checkThrowObjects();
-            this.checkBottleHits();
-            this.checkBossActivation();
+        this.gameInterval = setInterval(() => {
+            if (!this.gamePaused) {
+                this.checkCoinCollection();
+                this.checkBottleCollection();
+                this.checkEnemyCollisions();
+                this.checkThrowObjects();
+                this.checkBottleHits();
+                this.checkBossActivation();
+            }
         }, 50);
+    }
+
+    pauseGame() {
+        this.gamePaused = true;
+        clearInterval(this.gameInterval); // Stop the game loop
+    }
+
+    resumeGame() {
+        this.gamePaused = false;
+        this.run(); // Restart the game loop
     }
 
     checkThrowObjects() {
@@ -109,10 +122,11 @@ class World {
                 this.level.enemies.splice(enemyIndex, 1); // Remove enemy from the level after 1 second
                 console.log(`Enemy died, index: ${enemyIndex}`);
                 if (enemy instanceof Endboss) {
+                    this.pauseGame(); // Spiel pausieren, wenn der Endboss besiegt ist
                     win(); // Show win overlay if the endboss is defeated
                 }
             }
-        }, 1000); // 1 second delay for dead animation
+        }, 2000); // 2 second delay for dead animation
     }
 
     checkCoinCollection() {
@@ -191,6 +205,8 @@ class World {
     }
 
     draw() {
+        if (this.gamePaused) return; // Stop drawing if the game is paused
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
