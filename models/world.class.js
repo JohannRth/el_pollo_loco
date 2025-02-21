@@ -72,9 +72,12 @@ class World {
     }
 
     throwBottle() {
-        const bottle = ThrowableObject.throwBottle(this.character, this.collectedBottles, this.statusBarBottles, this.soundManager);
-        this.throwableObjects.push(bottle);
-        this.lastThrownBottle = bottle; // Set the last thrown bottle
+        const { bottle, collectedBottles } = ThrowableObject.throwBottle(this.character, this.collectedBottles, this.statusBarBottles, this.soundManager);
+        if (bottle) {
+            this.throwableObjects.push(bottle);
+            this.lastThrownBottle = bottle; // Set the last thrown bottle
+            this.collectedBottles = collectedBottles; // Update collected bottles
+        }
     }
 
     canThrowBottle() {
