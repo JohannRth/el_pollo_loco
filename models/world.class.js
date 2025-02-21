@@ -181,36 +181,46 @@ class World {
     draw() {
         if (this.gamePaused) return; // Stop drawing if the game is paused
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addToMap(this.character);
-
-        this.ctx.translate(-this.camera_x, 0); // Back
-        // --------- Space for fixed objects ------
-        this.addToMap(this.statusBar);
-        this.addToMap(this.statusBarCoins);
-        this.addToMap(this.statusBarBottles);
-        if (this.level.enemies.some(enemy => enemy instanceof Endboss && enemy.bossIsActivated)) {
-            this.addToMap(this.statusBarEndboss); // Status-Bar für Endboss hinzufügen, wenn aktiviert
-        }
-
-        this.ctx.translate(this.camera_x, 0); // Forwards
-
-        this.ctx.translate(-this.camera_x, 0);
+        this.clearCanvas();
+        this.drawBackground();
+        this.drawMovableObjects();
+        this.drawFixedObjects();
 
         // Draw() wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
+    }
+
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    drawBackground() {
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.ctx.translate(-this.camera_x, 0); // Back
+    }
+
+    drawMovableObjects() {
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObjects);
+        this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0); // Back
+    }
+
+    drawFixedObjects() {
+        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottles);
+        if (this.level.enemies.some(enemy => enemy instanceof Endboss && enemy.bossIsActivated)) {
+            this.addToMap(this.statusBarEndboss); // Status-Bar für Endboss hinzufügen, wenn aktiviert
+        }
     }
 
     addObjectsToMap(objects) {
