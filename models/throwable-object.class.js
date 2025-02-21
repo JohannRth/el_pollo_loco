@@ -74,18 +74,91 @@ class ThrowableObject extends MovableObject {
         }, 100);
     }
 
-    static throwBottle(character, collectedBottles, statusBarBottles, soundManager) {
+    static checkThrowObjects(keyboard, character, throwableObjects, statusBarBottles, soundManager, world) {
+        if (keyboard.D && world.collectedBottles > 0 && ThrowableObject.canThrowBottle(world)) {
+            ThrowableObject.throwBottle(character, throwableObjects, statusBarBottles, soundManager, world);
+        }
+    }
+
+    static throwBottle(character, throwableObjects, statusBarBottles, soundManager, world) {
+        const { bottle, collectedBottles } = ThrowableObject.createBottle(character, world.collectedBottles, statusBarBottles, soundManager, world);
+        if (bottle) {
+            throwableObjects.push(bottle);
+            world.lastThrownBottle = bottle;
+            world.collectedBottles = collectedBottles;
+        }
+    }
+
+    static canThrowBottle(world) {
+        return !world.lastThrownBottle || world.lastThrownBottle.y > 500;
+    }
+
+    static checkBottleHits(throwableObjects, enemies, statusBarEndboss, soundManager, world) {
+        throwableObjects.forEach((bottle, bottleIndex) => {
+            enemies.forEach((enemy, enemyIndex) => {
+                if (ThrowableObject.isBottleHittingEnemy(bottle, enemy)) {
+                    ThrowableObject.handleBottleHit(bottle, bottleIndex, enemy, statusBarEndboss, soundManager, world);
+                }
+            });
+        });
+    }
+
+    static isBottleHittingEnemy(bottle, enemy) {
+        return bottle.isColliding(enemy) && !bottle.hasHit;
+    }
+
+    static handleBottleHit(bottle, bottleIndex, enemy, statusBarEndboss, soundManager, world) {
+        enemy.hit(20);
+        bottle.startSplashAnimation();
+        console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
+        if (enemy instanceof Endboss) {
+            statusBarEndboss.setPercentage(enemy.energy);
+        }
+        if (enemy.energy <= 0) {
+            enemy.die();
+            enemy.offset.top = 400;
+            ThrowableObject.scheduleEnemyRemoval(enemy, world);
+        }
+        bottle.hasHit = true;
+        ThrowableObject.removeBottleAfterAnimation(bottleIndex, world);
+    }
+
+    static removeBottleAfterAnimation(bottleIndex, world) {
+        setTimeout(() => {
+            world.throwableObjects.splice(bottleIndex, 1);
+            world.lastThrownBottle = null;
+        }, 600);
+    }
+
+    static createBottle(character, collectedBottles, statusBarBottles, soundManager, world) {
         if (collectedBottles > 0) {
             const bottleX = character.x + (character.otherDirection ? -50 : 50);
             const bottleY = character.y + 100;
             const bottle = new ThrowableObject(bottleX, bottleY, character.otherDirection);
-            collectedBottles -= 1; // Decrement collected bottles
-            statusBarBottles.setPercentage(collectedBottles * 20); // Update bottle status bar
-            bottle.animate(); // Start bottle animation
+            bottle.world = world; // Set the world property
+            collectedBottles -= 1;
+            statusBarBottles.setPercentage(collectedBottles * 20);
+            bottle.animate();
             soundManager.play('throw');
             console.log(`Bottle thrown, remaining: ${collectedBottles}`);
             return { bottle, collectedBottles };
         }
         return { bottle: null, collectedBottles };
+    }
+
+    static scheduleEnemyRemoval(enemy, world) {
+        setTimeout(() => {
+            const enemyIndex = world.level.enemies.indexOf(enemy);
+            if (enemyIndex > -1) {
+                world.level.enemies.splice(enemyIndex, 1);
+                console.log(`Enemy died, index: ${enemyIndex}`);
+                if (enemy instanceof Endboss) {
+                    world.pauseGame();
+                    world.soundManager.play('bossDead');
+                    win();
+                    world.soundManager.play('win');
+                }
+            }
+        }, 2000);
     }
 }

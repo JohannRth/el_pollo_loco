@@ -43,8 +43,8 @@ class World {
         this.checkCoinCollection();
         this.checkBottleCollection();
         this.checkEnemyCollisions();
-        this.checkThrowObjects();
-        this.checkBottleHits();
+        ThrowableObject.checkThrowObjects(this.keyboard, this.character, this.throwableObjects, this.statusBarBottles, this.soundManager, this);
+        ThrowableObject.checkBottleHits(this.throwableObjects, this.level.enemies, this.statusBarEndboss, this.soundManager, this);
         this.checkBossActivation();
     }
 
@@ -63,25 +63,6 @@ class World {
         this.soundManager.play('gameOver');
         document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/game_over/game over.png';
         document.getElementById('win-loose').style.display = 'flex';
-    }
-
-    checkThrowObjects() {
-        if (this.keyboard.D && this.collectedBottles > 0 && this.canThrowBottle()) {
-            this.throwBottle();
-        }
-    }
-
-    throwBottle() {
-        const { bottle, collectedBottles } = ThrowableObject.throwBottle(this.character, this.collectedBottles, this.statusBarBottles, this.soundManager);
-        if (bottle) {
-            this.throwableObjects.push(bottle);
-            this.lastThrownBottle = bottle; // Set the last thrown bottle
-            this.collectedBottles = collectedBottles; // Update collected bottles
-        }
-    }
-
-    canThrowBottle() {
-        return !this.lastThrownBottle || this.lastThrownBottle.y > 500; // Allow throwing if no bottle has been thrown or if the last thrown bottle has fallen below y = 500
     }
 
     checkEnemyCollisions() {
@@ -175,43 +156,6 @@ class World {
         this.statusBarBottles.setPercentage(this.collectedBottles * 20); // Update bottle status bar
         this.soundManager.play('bottle');
         console.log(`Bottle collected, total: ${this.collectedBottles}`);
-    }
-
-    checkBottleHits() {
-        this.throwableObjects.forEach((bottle, bottleIndex) => {
-            this.level.enemies.forEach((enemy, enemyIndex) => {
-                if (this.isBottleHittingEnemy(bottle, enemy)) {
-                    this.handleBottleHit(bottle, bottleIndex, enemy);
-                }
-            });
-        });
-    }
-
-    isBottleHittingEnemy(bottle, enemy) {
-        return bottle.isColliding(enemy) && !bottle.hasHit;
-    }
-
-    handleBottleHit(bottle, bottleIndex, enemy) {
-        enemy.hit(20); // Apply damage to enemy
-        bottle.startSplashAnimation(); // Start splash animation
-        console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
-        if (enemy instanceof Endboss) {
-            this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
-        }
-        if (enemy.energy <= 0) {
-            enemy.die();
-            enemy.offset.top = 400; // Set offset to prevent further collisions
-            this.scheduleEnemyRemoval(enemy);
-        }
-        bottle.hasHit = true; // Mark bottle as hit
-        this.removeBottleAfterAnimation(bottleIndex);
-    }
-
-    removeBottleAfterAnimation(bottleIndex) {
-        setTimeout(() => {
-            this.throwableObjects.splice(bottleIndex, 1); // Remove bottle after splash animation completes
-            this.lastThrownBottle = null; // Allow throwing a new bottle
-        }, 600); // Duration of splash animation (6 frames * 100ms per frame)
     }
 
     checkBossActivation() {
