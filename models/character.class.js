@@ -103,6 +103,12 @@ class Character extends MovableObject {
     }
 
     animate() {
+        this.handleMovement();
+        this.handleAnimations();
+        this.handleIdleAnimation();
+    }
+
+    handleMovement() {
         setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -122,13 +128,15 @@ class Character extends MovableObject {
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
+    }
 
+    handleAnimations() {
         setInterval(() => {
             if (this.isDead()) {
-                this.soundManager.play('dead', 200000); // Play dead sound with a cooldown of 200000ms
+                this.soundManager.play('dead', 9999999999); // Play dead sound with a cooldown of 9999999999ms
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
-                this.soundManager.play('hurt', 1000); // Play hurt sound with a cooldown of 1000ms
+                this.soundManager.play('hurt', 1500); // Play hurt sound with a cooldown of 1500ms
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
@@ -139,14 +147,16 @@ class Character extends MovableObject {
                 }
             };
         }, 90);
+    }
 
+    handleIdleAnimation() {
         setInterval(() => {
             if (this.isWaiting()) {
                 this.playAnimation(this.IMAGES_IDLE);
                 this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
-                if (this.timer >= 13000) { // Überprüfe, ob 7 Sekunden vorbei sind
+                if (this.timer >= 7000) { // Überprüfe, ob 7 Sekunden vorbei sind
                     this.playAnimation(this.IMAGES_LONGIDLE);
-                    // this.snoring_sound.play();
+                    this.soundManager.play('snoring', 18000); // Play hurt sound with a cooldown of 18000ms
                 }
             } else {
                 this.timer = 0; // Timer zurücksetzen, wenn die Bedingung nicht erfüllt ist

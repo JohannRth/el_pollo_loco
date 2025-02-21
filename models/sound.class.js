@@ -3,6 +3,7 @@ class SoundManager {
         this.sounds = {
             walking: new Audio('audio/running.mp3'),
             jump: new Audio('audio/jump.mp3'),
+            snoring: new Audio('audio/snoring.mp3'),
             hurt: new Audio('audio/hurt.mp3'),
             dead: new Audio('audio/dead.mp3'),
             coin: new Audio('audio/coin.mp3'),
