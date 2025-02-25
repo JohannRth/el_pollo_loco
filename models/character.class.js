@@ -160,6 +160,7 @@ class Character extends MovableObject {
                 }
             } else {
                 this.timer = 0; // Timer zurücksetzen, wenn die Bedingung nicht erfüllt ist
+                this.soundManager.stop('snoring'); // Stop snoring sound if character moves
             }
         }, 300); // Wird alle 300 Millisekunden aufgerufen
     }
