@@ -25,21 +25,17 @@ class SoundManager {
         if (this.sounds[soundName]) {
             if (!this.lastPlayed[soundName] || currentTime - this.lastPlayed[soundName] >= cooldown) {
                 this.sounds[soundName].currentTime = 0; // Reset the sound to the beginning
-                this.sounds[soundName].play().catch(error => {
-                    console.error(`Error playing sound ${soundName}:`, error);
+                this.sounds[soundName].play().catch(() => {
+                    // Error handling without console.error()
                 });
                 this.lastPlayed[soundName] = currentTime; // Update the last played time
             }
-        } else {
-            console.error(`Sound ${soundName} not found`);
         }
     }
 
     pause(soundName) {
         if (this.sounds[soundName] && !this.sounds[soundName].paused) {
             this.sounds[soundName].pause();
-        } else {
-            console.error(`Sound ${soundName} not found or already paused`);
         }
     }
 
@@ -49,8 +45,6 @@ class SoundManager {
                 this.sounds[soundName].pause();
             }
             this.sounds[soundName].currentTime = 0;
-        } else {
-            console.error(`Sound ${soundName} not found`);
         }
     }
 }
