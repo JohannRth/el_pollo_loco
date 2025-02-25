@@ -78,7 +78,7 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             if (super.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
@@ -92,7 +92,7 @@ class Endboss extends MovableObject {
             }
         }, 200);
 
-        setInterval(() => {
+        this.movementInterval = setInterval(() => {
             if (this.bossIsActivated) {
                 this.moveLeft();
             }
@@ -124,5 +124,10 @@ class Endboss extends MovableObject {
                 clearInterval(interval);
             }
         }, 20); // Alle 20ms bewegen
+    }
+
+    stopAllIntervals() {
+        clearInterval(this.animationInterval);
+        clearInterval(this.movementInterval);
     }
 }

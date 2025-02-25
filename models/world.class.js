@@ -60,6 +60,8 @@ class World {
 
     endGame() { // Umbenannt von gameOver
         this.pauseGame();
+        this.stopAllIntervals(); // Stop all intervals
+        this.stopAllSounds(); // Stop all sounds
         this.soundManager.play('gameOver');
         document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/game_over/game over.png';
         document.getElementById('win-loose').style.display = 'flex';
@@ -67,9 +69,28 @@ class World {
 
     winGame() { // Umbenannt von win
         this.pauseGame();
+        this.stopAllIntervals(); // Stop all intervals
+        this.stopAllSounds(); // Stop all sounds
         this.soundManager.play('win');
         document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/win/win_2.png';
         document.getElementById('win-loose').style.display = 'flex';
+    }
+
+    stopAllIntervals() {
+        clearInterval(this.gameInterval);
+        this.character.stopAllIntervals();
+        this.level.enemies.forEach(enemy => {
+            if (typeof enemy.stopAllIntervals === 'function') {
+                enemy.stopAllIntervals();
+            }
+        });
+        this.throwableObjects.forEach(object => object.stopAllIntervals());
+    }
+
+    stopAllSounds() {
+        Object.keys(this.soundManager.sounds).forEach(soundName => {
+            this.soundManager.stop(soundName);
+        });
     }
 
     checkEnemyCollisions() {
@@ -97,12 +118,12 @@ class World {
 
     calculateDamage(enemy) {
         if (enemy instanceof Chicken) {
-            return 5;
+            return 100;
         } else if (enemy instanceof MiniChicken) {
-            return 3;
+            return 100;
         } else if (enemy instanceof Endboss) {
             this.character.knockback(); // Character führt Rückstoß aus
-            return 10;
+            return 100;
         } else {
             return 0; // Default damage
         }

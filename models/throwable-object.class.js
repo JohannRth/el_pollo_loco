@@ -161,4 +161,10 @@ class ThrowableObject extends MovableObject {
             }
         }, 2000);
     }
+
+    stopAllIntervals() {
+        clearInterval(this.throwInterval);
+        clearInterval(this.gravityInterval);
+        clearInterval(this.animateInterval);
+    }
 }

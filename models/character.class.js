@@ -109,7 +109,7 @@ class Character extends MovableObject {
     }
 
     handleMovement() {
-        setInterval(() => {
+        this.movementInterval = setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
@@ -131,7 +131,7 @@ class Character extends MovableObject {
     }
 
     handleAnimations() {
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.soundManager.play('dead', 9999999999); // Play dead sound with a cooldown of 9999999999ms
                 this.playAnimation(this.IMAGES_DEAD);
@@ -150,18 +150,24 @@ class Character extends MovableObject {
     }
 
     handleIdleAnimation() {
-        setInterval(() => {
+        this.idleInterval = setInterval(() => {
             if (this.isWaiting()) {
                 this.playAnimation(this.IMAGES_IDLE);
                 this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
                 if (this.timer >= 7000) { // Überprüfe, ob 7 Sekunden vorbei sind
                     this.playAnimation(this.IMAGES_LONGIDLE);
-                    this.soundManager.play('snoring', 18000); // Play hurt sound with a cooldown of 18000ms
+                    this.soundManager.play('snoring', 18000); // Play snoring sound with a cooldown of 18000ms
                 }
             } else {
                 this.timer = 0; // Timer zurücksetzen, wenn die Bedingung nicht erfüllt ist
             }
         }, 300); // Wird alle 300 Millisekunden aufgerufen
+    }
+
+    stopAllIntervals() {
+        clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
+        clearInterval(this.idleInterval);
     }
 
 }
