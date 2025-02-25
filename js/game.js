@@ -35,15 +35,11 @@ function showImprint() {
 }
 
 function win() {
-    world.pauseGame(); // Spiel pausieren
-    document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/win/win_2.png';
-    document.getElementById('win-loose').style.display = 'flex';
+    world.winGame(); // Aufruf der umbenannten Methode
 }
 
 function gameOver() {
-    world.pauseGame(); // Spiel pausieren
-    document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/game_over/game over.png';
-    document.getElementById('win-loose').style.display = 'flex';
+    world.endGame(); // Aufruf der umbenannten Methode
 }
 
 function playAgain() {

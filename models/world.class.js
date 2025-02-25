@@ -58,10 +58,17 @@ class World {
         this.run(); // Restart the game loop
     }
 
-    gameOver() {
+    endGame() { // Umbenannt von gameOver
         this.pauseGame();
         this.soundManager.play('gameOver');
         document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/game_over/game over.png';
+        document.getElementById('win-loose').style.display = 'flex';
+    }
+
+    winGame() { // Umbenannt von win
+        this.pauseGame();
+        this.soundManager.play('win');
+        document.getElementById('win-loose-image').src = 'img/9_intro_outro_screens/win/win_2.png';
         document.getElementById('win-loose').style.display = 'flex';
     }
 
@@ -83,7 +90,7 @@ class World {
             console.log(`Collision with Character, index: ${index}, energy: ${this.character.energy}, damage: ${damage}`);
             this.soundManager.play('hurt', 1000); // Play hurt sound with a cooldown of 1000ms
             if (this.character.isDead()) {
-                this.gameOver(); // Spiel beenden, wenn der Charakter stirbt
+                this.endGame(); // Spiel beenden, wenn der Charakter stirbt
             }
         }
     }
@@ -120,7 +127,7 @@ class World {
                 if (enemy instanceof Endboss) {
                     this.pauseGame(); // Spiel pausieren, wenn der Endboss besiegt ist
                     this.soundManager.play('bossDead');
-                    win(); // Show win overlay if the endboss is defeated
+                    this.winGame(); // Show win overlay if the endboss is defeated
                 }
             }
         }, 2000); // 2 second delay for dead animation

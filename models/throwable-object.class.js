@@ -117,7 +117,7 @@ class ThrowableObject extends MovableObject {
         if (enemy.energy <= 0) {
             enemy.die();
             enemy.offset.top = 400;
-            ThrowableObject.scheduleEnemyRemoval(enemy, world);
+            ThrowableObject.scheduleEnemyRemovalFromWorld(enemy, world);
         }
         bottle.hasHit = true;
         ThrowableObject.removeBottleAfterAnimation(bottleIndex, world);
@@ -146,7 +146,7 @@ class ThrowableObject extends MovableObject {
         return { bottle: null, collectedBottles };
     }
 
-    static scheduleEnemyRemoval(enemy, world) {
+    static scheduleEnemyRemovalFromWorld(enemy, world) { // Umbenannt von scheduleEnemyRemoval
         setTimeout(() => {
             const enemyIndex = world.level.enemies.indexOf(enemy);
             if (enemyIndex > -1) {
