@@ -12,7 +12,7 @@ body {
 
 @font-face {
     font-family: 'west';
-    src:url('fonts/west.ttf');
+    src: url('fonts/west.ttf');
 }
 
 h1 {
@@ -28,7 +28,7 @@ canvas {
     border-radius: 8px;
 }
 
-.game-container  {
+.game-container {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -71,7 +71,8 @@ canvas {
     border-radius: 8px;
 }
 
-.instructions-container, .imprint-container {
+.instructions-container,
+.imprint-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -168,6 +169,16 @@ canvas {
     background-color: #b85600;
 }
 
+.mute-panel {
+    display: flex;
+    position: absolute;
+    overflow: 1;
+    flex-direction: column;
+    z-index: 1;
+    top: 20vh;
+}
+
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
@@ -183,7 +194,7 @@ canvas {
         width: unset;
         height: unset;
     }
-    
+
 }
 
 @media only screen and (max-width: 480px) {
