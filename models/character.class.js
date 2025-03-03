@@ -110,26 +110,36 @@ class Character extends MovableObject {
 
     handleMovement() {
         this.movementInterval = setInterval(() => {
-            let isWalking = false;
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                isWalking = true;
-            } else if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                isWalking = true;
-            }
-
+            let isWalking = this.checkWalking();
             this.handleWalkingSound(isWalking);
-
-            if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.soundManager.play('jump', 1000); // Play jump sound with a cooldown of 1000ms
-            }
-
-            this.world.camera_x = -this.x + 100;
+            this.checkJumping();
+            this.updateCamera();
         }, 1000 / 60);
+    }
+
+    checkWalking() {
+        let isWalking = false;
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            isWalking = true;
+        } else if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            isWalking = true;
+        }
+        return isWalking;
+    }
+
+    checkJumping() {
+        if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+            this.soundManager.play('jump', 1000); // Play jump sound with a cooldown of 1000ms
+        }
+    }
+
+    updateCamera() {
+        this.world.camera_x = -this.x + 100;
     }
 
     handleWalkingSound(isWalking) {
@@ -180,6 +190,7 @@ class Character extends MovableObject {
         clearInterval(this.animationInterval);
         clearInterval(this.idleInterval);
         this.handleWalkingSound(false); // Stop walking sound immediately
-    }
+        this.soundManager.stop('snoring'); // Stop snoring sound immediately
+     }
 
 }
