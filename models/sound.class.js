@@ -21,6 +21,7 @@ class SoundManager {
     }
 
     play(soundName, cooldown = 1000) {
+        if (isMuted) return; // Keine Sounds abspielen, wenn stummgeschaltet
         const currentTime = new Date().getTime();
         if (this.sounds[soundName]) {
             if (!this.lastPlayed[soundName] || currentTime - this.lastPlayed[soundName] >= cooldown) {

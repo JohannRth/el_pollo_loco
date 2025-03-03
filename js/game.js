@@ -1,12 +1,18 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isMuted = false; // Globale Variable zum Speichern des Mute-Status
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     console.log('My Character is', world.character);
     addTouchListeners(); // Event-Listener für die Buttons hinzufügen
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    console.log('Mute status:', isMuted);
 }
 
 function showMenu() {
