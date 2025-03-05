@@ -114,12 +114,14 @@ canvas {
 }
 
 .win-loose-image {
-    width: 80%;
-    height: 80%;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
 }
 
 .win-loose-buttons {
+    position: absolute;
+    bottom: 1vh;
     display: flex;
     justify-content: space-evenly;
     width: 100%;
@@ -193,8 +195,9 @@ canvas {
 
     .menu-container {
         width: 100vw;
-        
+        height: unset;
         object-fit: fill;
+        aspect-ratio: auto 720 / 480;
     }
 
     .game-content {
