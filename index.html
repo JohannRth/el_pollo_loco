@@ -31,59 +31,67 @@
 
 <body onload="showMenu()">
 
-    <div class="mute-panel">
-        <button class="btn" onclick="toggleMute()">Mute</button>
-    </div>
 
-    <div id="menu" class="menu-container">
-        <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Background Image" class="background-image">
-        <div class="menu-content">
-            <button class="btn" onclick="startGame()">Start Game</button>
-            <button class="btn" onclick="showInstructions()">Instructions</button>
-            <button class="btn" onclick="showImprint()">Impressum</button>
-        </div>
-    </div>
+    <div class="game-container">
 
-    <div id="game" class="game-container" style="display: none;">
-        <canvas id="canvas" width="720" height="480"></canvas>
-        <div class="panel-below">
-            <div class="panel-below-left">
-                <button id="btnLeft" class="btn"><</button>
-                <button id="btnRight" class="btn">></button>
-            </div>
-            <div class="panel-below-right">
-                <button id="btnThrow" class="btn">THROW</button>
-                <button id="btnJump" class="btn">JUMP</button>
+        <div id="menu" class="menu-container">
+            <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Background Image"
+                class="background-image">
+            <div class="menu-content">
+                <button class="btn" onclick="startGame()">Start Game</button>
+                <button class="btn" onclick="showInstructions()">Instructions</button>
+                <button class="btn" onclick="showImprint()">Impressum</button>
             </div>
         </div>
-    </div>
 
-    <div id="instructions" class="instructions-container" style="display: none;">
-        <h1>Instructions</h1>
-        <p>Use the following keys to control the character:</p>
-        <ul>
-            <li><img src="img/keyboard/left.png" alt="Left">Left Arrow: Move Left</li>
-            <li><img src="img/keyboard/right.png" alt="Right">Right Arrow: Move Right</li>
-            <li><img src="img/keyboard/up.png" alt="Up"> <img src="img/keyboard/space.png" alt="Space">Up Arrow or Space: Jump</li>
-            <li><img src="img/keyboard/d.png" alt="D">D: Throw Bottle</li>
-        </ul>
-        <button class="btn" onclick="showMenu()">Back to Menu</button>
-    </div>
+        <div id="game" class="game-content" style="display: none;">
 
-    <div id="imprint" class="imprint-container" style="display: none;">
-        <h1>Impressum</h1>
-        <p>Here you can add your personal information or legal notice.</p>
-        <button class="btn" onclick="showMenu()">Back to Menu</button>
-    </div>
+            <div class="mute-panel">
+                <div class="btn" onclick="toggleMute()">Mute</div>
+            </div>
 
-    <div id="win-loose" class="win-loose-container" style="display: none;">
-        <img id="win-loose-image" src="img/9_intro_outro_screens/win/win_2.png" alt="Win or Loose Image" class="win-loose-image">
-        <div class="win-loose-buttons">
-            <button class="btn" onclick="playAgain()">Play Again</button>
-            <button class="btn" onclick="backToMenu()">Back to Menu</button>
+            <canvas id="canvas" width="720" height="480"></canvas>
+            <div class="panel-below">
+                <div class="panel-below-left">
+                    <button id="btnLeft" class="btn"> < </button>
+                    <button id="btnRight" class="btn"> > </button>
+                </div>
+                
+                <div class="panel-below-right">
+                    <button id="btnThrow" class="btn">THROW</button>
+                    <button id="btnJump" class="btn">JUMP</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="instructions" class="instructions-container" style="display: none;">
+            <h1>Instructions</h1>
+            <p>Use the following keys to control the character:</p>
+            <ul>
+                <li><img src="img/keyboard/left.png" alt="Left">Left Arrow: Move Left</li>
+                <li><img src="img/keyboard/right.png" alt="Right">Right Arrow: Move Right</li>
+                <li><img src="img/keyboard/up.png" alt="Up"> <img src="img/keyboard/space.png" alt="Space">Up Arrow or
+                    Space: Jump</li>
+                <li><img src="img/keyboard/d.png" alt="D">D: Throw Bottle</li>
+            </ul>
+            <button class="btn" onclick="showMenu()">Back to Menu</button>
+        </div>
+
+        <div id="imprint" class="imprint-container" style="display: none;">
+            <h1>Impressum</h1>
+            <p>Here you can add your personal information or legal notice.</p>
+            <button class="btn" onclick="showMenu()">Back to Menu</button>
+        </div>
+
+        <div id="win-loose" class="win-loose-container" style="display: none;">
+            <img id="win-loose-image" src="img/9_intro_outro_screens/win/win_2.png" alt="Win or Loose Image"
+                class="win-loose-image">
+            <div class="win-loose-buttons">
+                <button class="btn" onclick="playAgain()">Play Again</button>
+                <button class="btn" onclick="backToMenu()">Back to Menu</button>
+            </div>
         </div>
     </div>
-
 </body>
 
 </html>

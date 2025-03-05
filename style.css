@@ -28,7 +28,15 @@ canvas {
     border-radius: 8px;
 }
 
-.game-container {
+.game-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.game-content {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -106,8 +114,8 @@ canvas {
 }
 
 .win-loose-image {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     object-fit: contain;
 }
 
@@ -172,10 +180,9 @@ canvas {
 .mute-panel {
     display: flex;
     position: absolute;
-    overflow: 1;
     flex-direction: column;
     z-index: 1;
-    top: 20vh;
+    top: 1vh;
 }
 
 
@@ -185,14 +192,19 @@ canvas {
     }
 
     .menu-container {
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        
         object-fit: fill;
     }
 
-    .game-container {
+    .game-content {
         width: unset;
         height: unset;
+    }
+
+    .win-loose-container {
+        width: 100%;
+        height: 100%;
     }
 
 }
