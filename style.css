@@ -110,8 +110,8 @@ canvas {
 
 .back-to-menu {
     position: absolute;
-    top: 1vh;
-    right: 1vh;
+    top: 5vh;
+    right: 5vh;
 }
 
 .win-loose-container {
