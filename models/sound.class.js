@@ -18,13 +18,45 @@ class SoundManager {
             gameOver: new Audio('audio/game_over.mp3')
         };
         this.lastPlayed = {}; // Track the last played time for each sound
+        this.volume = 1.0; // Default volume
+
+        // Set initial volume for each sound
+        this.setInitialVolumes();
+        this.monitorVolume(); // Start monitoring volume
     }
 
-    play(soundName, cooldown = 1000) {
+    setInitialVolumes() {
+        this.sounds.walking.initialVolume = 0.5;
+        this.sounds.jump.initialVolume = 0.5;
+        this.sounds.snoring.initialVolume = 0.1;
+        this.sounds.hurt.initialVolume = 0.5;
+        this.sounds.dead.initialVolume = 0.5;
+        this.sounds.coin.initialVolume = 0.5;
+        this.sounds.bottle.initialVolume = 0.5;
+        this.sounds.bottleBreak.initialVolume = 0.5;
+        this.sounds.throw.initialVolume = 0.5;
+        this.sounds.chickenDead.initialVolume = 0.5;
+        this.sounds.bossAlert.initialVolume = 0.5;
+        this.sounds.bossHurt.initialVolume = 0.5;
+        this.sounds.bossDead.initialVolume = 0.5;
+        this.sounds.win.initialVolume = 0.5;
+        this.sounds.gameOver.initialVolume = 0.5;
+
+        // Apply initial volumes
+        this.setAllVolumes();
+    }
+
+    setVolume(volume) {
+        this.volume = volume;
+        this.setAllVolumes();
+    }
+
+    play(soundName, cooldown = 1000, volume = this.volume) {
         if (isMuted) return; // Keine Sounds abspielen, wenn stummgeschaltet
         const currentTime = new Date().getTime();
         if (this.sounds[soundName]) {
             if (!this.lastPlayed[soundName] || currentTime - this.lastPlayed[soundName] >= cooldown) {
+                this.sounds[soundName].volume = volume; // Set the volume
                 this.sounds[soundName].currentTime = 0; // Reset the sound to the beginning
                 this.sounds[soundName].play().catch(() => {
                     // Error handling without console.error()
@@ -47,5 +79,29 @@ class SoundManager {
             }
             this.sounds[soundName].currentTime = 0;
         }
+    }
+
+    pauseAllSounds() {
+        Object.keys(this.sounds).forEach(soundName => {
+            this.pause(soundName);
+        });
+    }
+
+    stopAllSounds() {
+        Object.keys(this.sounds).forEach(soundName => {
+            this.stop(soundName);
+        });
+    }
+
+    setAllVolumes() {
+        Object.keys(this.sounds).forEach(soundName => {
+            this.sounds[soundName].volume = isMuted ? 0 : this.sounds[soundName].initialVolume;
+        });
+    }
+
+    monitorVolume() {
+        setInterval(() => {
+            this.setAllVolumes();
+        }, 100); // Check and set volume every 100ms
     }
 }
