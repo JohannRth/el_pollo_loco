@@ -12,6 +12,12 @@ function init() {
 
 function toggleMute() {
     isMuted = !isMuted;
+    const muteIcon = document.getElementById('mute-icon');
+    if (isMuted) {
+        muteIcon.src = 'img/sound/mute.png';
+    } else {
+        muteIcon.src = 'img/sound/unmute.png';
+    }
     console.log('Mute status:', isMuted);
 }
 
