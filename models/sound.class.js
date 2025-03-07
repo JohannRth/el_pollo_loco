@@ -15,7 +15,8 @@ class SoundManager {
             bossHurt: new Audio('audio/boss_hurt.mp3'),
             bossDead: new Audio('audio/boss_dead.mp3'),
             win: new Audio('audio/win.mp3'),
-            gameOver: new Audio('audio/game_over.mp3')
+            gameOver: new Audio('audio/game_over.mp3'),
+            backgroundMusic: new Audio('audio/bg-music.mp3') // Hintergrundmusik hinzufügen
         };
         this.lastPlayed = {}; // Track the last played time for each sound
         this.volume = 1.0; // Default volume
@@ -41,6 +42,7 @@ class SoundManager {
         this.sounds.bossDead.initialVolume = 0.5;
         this.sounds.win.initialVolume = 0.5;
         this.sounds.gameOver.initialVolume = 0.5;
+        this.sounds.backgroundMusic.initialVolume = 0.1; // Initiale Lautstärke für Hintergrundmusik
 
         // Apply initial volumes
         this.setAllVolumes();
@@ -64,6 +66,13 @@ class SoundManager {
                 this.lastPlayed[soundName] = currentTime; // Update the last played time
             }
         }
+    }
+
+    playBackgroundMusic() {
+        this.sounds.backgroundMusic.loop = true; // Hintergrundmusik in Schleife abspielen
+        this.sounds.backgroundMusic.play().catch(() => {
+            // Error handling without console.error()
+        });
     }
 
     pause(soundName) {

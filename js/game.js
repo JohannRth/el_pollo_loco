@@ -8,6 +8,7 @@ function init() {
     world = new World(canvas, keyboard);
     console.log('My Character is', world.character);
     addTouchListeners(); // Event-Listener für die Buttons hinzufügen
+    world.soundManager.playBackgroundMusic(); // Hintergrundmusik abspielen
 }
 
 function toggleMute() {
