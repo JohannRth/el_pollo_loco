@@ -2,6 +2,7 @@ class Endboss extends MovableObject {
     energy = 100;
     height = 400;
     width = 250;
+    speed = 0.8;
     x = 2200;
     y = 60;
 
@@ -56,6 +57,7 @@ class Endboss extends MovableObject {
     soundManager = new SoundManager();
     statusBarEndboss = new StatusBarEndboss();
     isAttacking = false;
+    isHurtAnimationPlaying = false; // Add flag to indicate Hurt animation playing
 
     constructor(x, y){
         super().loadImage(this.IMAGES_ALERT[0]);
@@ -75,6 +77,10 @@ class Endboss extends MovableObject {
         this.soundManager.play('bossHurt', 1000);
         super.hit(damage);
         this.statusBarEndboss.setPercentage(this.energy);
+        this.isHurtAnimationPlaying = true; // Set flag to true when hit
+        setTimeout(() => {
+            this.isHurtAnimationPlaying = false; // Reset flag after Hurt animation duration
+        }, 500); // Assuming Hurt animation duration is 500ms
     }
 
     animate() {
@@ -93,7 +99,7 @@ class Endboss extends MovableObject {
         }, 200);
 
         this.movementInterval = setInterval(() => {
-            if (this.bossIsActivated) {
+            if (this.bossIsActivated && !this.isHurtAnimationPlaying) { // Prevent movement during Hurt animation
                 this.moveLeft();
             }
         }, 1000 / 60);

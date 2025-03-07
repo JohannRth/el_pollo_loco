@@ -118,12 +118,12 @@ class World {
 
     calculateDamage(enemy) {
         if (enemy instanceof Chicken) {
-            return 100;
+            return 10;
         } else if (enemy instanceof MiniChicken) {
-            return 100;
+            return 5;
         } else if (enemy instanceof Endboss) {
             this.character.knockback(); // Character führt Rückstoß aus
-            return 100;
+            return 20;
         } else {
             return 0; // Default damage
         }
@@ -199,7 +199,7 @@ class World {
             enemy.activateBossWithAlert();
             this.statusBarEndboss.setPercentage(enemy.energy); // Update status bar for endboss
         }
-        if (this.character.x > enemy.x - 100 && this.character.x < enemy.x + 100) {
+        if (this.character.x > enemy.x - 200 && this.character.x < enemy.x + 100) {
             enemy.isAttacking = true; // Set isAttacking to true when the character is very close to the endboss
         } else {
             enemy.isAttacking = false; // Set isAttacking to false when the character is not very close to the endboss
@@ -266,8 +266,8 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx); // beide aufrufe sind bei drawable-objects
-        mo.drawFrameOffset(this.ctx);
+        // mo.drawFrame(this.ctx); 
+        // mo.drawFrameOffset(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

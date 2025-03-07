@@ -28,12 +28,17 @@
     <script src="models/sound.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/rotate-warning.js"></script> <!-- Neue Datei für Rotate-Warning -->
 </head>
 
 <body onload="showMenu()">
 
+    <div id="rotate-warning">
+        <img src="./img/turning-phone.png" alt="Rotate Your Device">
+        <p>Please turn your Device for a better Gameplay.</p>
+    </div>
 
-    <div class="game-container">
+    <div id="fullScreen" class="game-container">
 
         <div id="menu" class="menu-container">
             <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Background Image"

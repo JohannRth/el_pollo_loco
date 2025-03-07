@@ -108,7 +108,7 @@ class ThrowableObject extends MovableObject {
     }
 
     static handleBottleHit(bottle, bottleIndex, enemy, statusBarEndboss, soundManager, world) {
-        enemy.hit(100);
+        enemy.hit(20);
         bottle.startSplashAnimation();
         console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
         if (enemy instanceof Endboss) {

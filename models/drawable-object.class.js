@@ -9,14 +9,12 @@ class DrawableObject {
 
     // loadImage('img/test.png');
     loadImage(path) {
-        this.img = new Image(); // this.img = document.getElementById('image') <img id="image" src>
+        this.img = new Image(); 
         this.img.src = path;
     }
 
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-        // this.drawFrame(ctx);
-        // this.drawFrameOffset(ctx); 
     }
 
     drawFrame(ctx) {

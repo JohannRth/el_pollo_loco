@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
-    damageCooldown = 200; // 0.4 second cooldown
+    damageCooldown = 200; // 0.2 second cooldown
     lastDamageTime = 0;
     bossIsActivated = false;
 

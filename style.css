@@ -22,6 +22,28 @@ h1 {
     position: relative;
 }
 
+#rotate-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 24px;
+    z-index: 9999;
+}
+
+#rotate-warning img {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
 canvas {
     background-color: black;
     display: block;
@@ -110,8 +132,8 @@ canvas {
 
 .back-to-menu {
     position: absolute;
-    top: 5vh;
-    right: 5vh;
+    top: 5%;
+    right: 5%;
 }
 
 .win-loose-container {
@@ -149,7 +171,7 @@ canvas {
 
 .panel-below {
     position: absolute;
-    display: flex;
+    display: none;
     width: 100%;
     justify-content: space-around;
     bottom: 8px;
@@ -212,33 +234,39 @@ canvas {
 }
 
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 1080px) {
     canvas {
-        width: 100%;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .panel-below {
+        display: flex;
     }
 
     .menu-container {
         width: 100vw;
-        height: unset;
+        height: 100vh;
         object-fit: fill;
         aspect-ratio: auto 720 / 480;
     }
 
     .game-content {
-        width: unset;
-        height: unset;
+        width: 100vw;
+        height: 100vh;
+        aspect-ratio: auto 720 / 480;
     }
 
     .win-loose-container {
-        width: 100%;
-        height: unset;
+        width: 100vw;
+        height: 100vh;
         aspect-ratio: auto 720 / 480;
     }
 
     .instructions-container,
     .imprint-container {
         width: 100vw;
-        height: unset;
+        height: 100vh;
         aspect-ratio: auto 720 / 480;
     }
 
@@ -246,7 +274,7 @@ canvas {
 
 @media only screen and (max-width: 480px) {
     canvas {
-        height: 90vh;
+        height: 100vh;
     }
 
 }
