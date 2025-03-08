@@ -1,3 +1,7 @@
+/**
+ * Class representing a throwable object in the game.
+ * @extends MovableObject
+ */
 class ThrowableObject extends MovableObject {
     soundManager = new SoundManager();
 
@@ -17,6 +21,12 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    /**
+     * Creates an instance of ThrowableObject.
+     * @param {number} x - The x-coordinate of the object.
+     * @param {number} y - The y-coordinate of the object.
+     * @param {boolean} otherDirection - Indicates if the object is thrown in the opposite direction.
+     */
     constructor(x, y, otherDirection) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.BOTTLE_ROTATION);
@@ -26,11 +36,14 @@ class ThrowableObject extends MovableObject {
         this.height = 60;
         this.width = 50;
         this.otherDirection = otherDirection;
-        this.hasHit = false; // Initialize hasHit property
-        this.gravityInterval = null; // Initialize gravity interval
+        this.hasHit = false; 
+        this.gravityInterval = null; 
         this.throw();
     }
 
+    /**
+     * Initiates the throw action for the object.
+     */
     throw() {
         this.speedY = 30;
         this.applyGravity();
@@ -39,6 +52,9 @@ class ThrowableObject extends MovableObject {
         }, 30);
     }
 
+    /**
+     * Applies gravity to the object.
+     */
     applyGravity() {
         this.gravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -48,38 +64,64 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 25);
     }
 
+    /**
+     * Animates the object by rotating it.
+     */
     animate() {
         this.animateInterval = setInterval(() => {
             this.playAnimation(this.BOTTLE_ROTATION);
         }, 60);
     }
 
+    /**
+     * Starts the splash animation when the object hits something.
+     */
     startSplashAnimation() {
-        clearInterval(this.throwInterval); // Stop bottle movement
-        clearInterval(this.animateInterval); // Stop rotation animation
-        clearInterval(this.gravityInterval); // Stop gravity
-        this.speedY = 0; // Stop vertical movement
+        clearInterval(this.throwInterval); 
+        clearInterval(this.animateInterval); 
+        clearInterval(this.gravityInterval); 
+        this.speedY = 0; 
         this.playSplashAnimation();
     }
 
+    /**
+     * Plays the splash animation and marks the object as hit.
+     */
     playSplashAnimation() {
         this.soundManager.play('bottleBreak', 1000);
-        this.currentImage = 0; // Reset animation frame
+        this.currentImage = 0; 
         this.animateInterval = setInterval(() => {
             this.playAnimation(this.BOTTLE_SPLASH);
             if (this.currentImage >= this.BOTTLE_SPLASH.length) {
-                clearInterval(this.animateInterval); // Stop splash animation after it completes
-                this.hasHit = true; // Mark bottle as hit
+                clearInterval(this.animateInterval); 
+                this.hasHit = true; 
             }
         }, 100);
     }
 
+    /**
+     * Checks if the player can throw a bottle based on the keyboard input and game state.
+     * @param {Object} keyboard - The keyboard input object.
+     * @param {Object} character - The character object.
+     * @param {Array} throwableObjects - The array of throwable objects.
+     * @param {Object} statusBarBottles - The status bar for bottles.
+     * @param {Object} soundManager - The sound manager.
+     * @param {Object} world - The game world object.
+     */
     static checkThrowObjects(keyboard, character, throwableObjects, statusBarBottles, soundManager, world) {
         if (keyboard.D && world.collectedBottles > 0 && ThrowableObject.canThrowBottle(world)) {
             ThrowableObject.throwBottle(character, throwableObjects, statusBarBottles, soundManager, world);
         }
     }
 
+    /**
+     * Handles the logic for throwing a bottle.
+     * @param {Object} character - The character throwing the bottle.
+     * @param {Array} throwableObjects - The array of throwable objects.
+     * @param {Object} statusBarBottles - The status bar for bottles.
+     * @param {Object} soundManager - The sound manager.
+     * @param {Object} world - The game world object.
+     */
     static throwBottle(character, throwableObjects, statusBarBottles, soundManager, world) {
         const { bottle, collectedBottles } = ThrowableObject.createBottle(character, world.collectedBottles, statusBarBottles, soundManager, world);
         if (bottle) {
@@ -89,10 +131,23 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+    /**
+     * Checks if a bottle can be thrown based on the current state of the world.
+     * @param {Object} world - The game world object.
+     * @returns {boolean} - True if a bottle can be thrown, false otherwise.
+     */
     static canThrowBottle(world) {
         return !world.lastThrownBottle || world.lastThrownBottle.y > 500;
     }
 
+    /**
+     * Checks if any throwable objects hit enemies.
+     * @param {Array} throwableObjects - The array of throwable objects.
+     * @param {Array} enemies - The array of enemies.
+     * @param {Object} statusBarEndboss - The status bar for the end boss.
+     * @param {Object} soundManager - The sound manager.
+     * @param {Object} world - The game world object.
+     */
     static checkBottleHits(throwableObjects, enemies, statusBarEndboss, soundManager, world) {
         throwableObjects.forEach((bottle, bottleIndex) => {
             enemies.forEach((enemy, enemyIndex) => {
@@ -103,14 +158,28 @@ class ThrowableObject extends MovableObject {
         });
     }
 
+    /**
+     * Determines if a bottle is hitting an enemy.
+     * @param {Object} bottle - The bottle object.
+     * @param {Object} enemy - The enemy object.
+     * @returns {boolean} - True if the bottle is hitting the enemy, false otherwise.
+     */
     static isBottleHittingEnemy(bottle, enemy) {
         return bottle.isColliding(enemy) && !bottle.hasHit;
     }
 
+    /**
+     * Handles the logic when a bottle hits an enemy.
+     * @param {Object} bottle - The bottle object.
+     * @param {number} bottleIndex - The index of the bottle in the array.
+     * @param {Object} enemy - The enemy object.
+     * @param {Object} statusBarEndboss - The status bar for the end boss.
+     * @param {Object} soundManager - The sound manager.
+     * @param {Object} world - The game world object.
+     */
     static handleBottleHit(bottle, bottleIndex, enemy, statusBarEndboss, soundManager, world) {
         enemy.hit(20);
         bottle.startSplashAnimation();
-        console.log(`Bottle hit enemy, enemy energy: ${enemy.energy}`);
         if (enemy instanceof Endboss) {
             statusBarEndboss.setPercentage(enemy.energy);
         }
@@ -123,6 +192,11 @@ class ThrowableObject extends MovableObject {
         ThrowableObject.removeBottleAfterAnimation(bottleIndex, world);
     }
 
+    /**
+     * Removes the bottle from the world after the splash animation completes.
+     * @param {number} bottleIndex - The index of the bottle in the array.
+     * @param {Object} world - The game world object.
+     */
     static removeBottleAfterAnimation(bottleIndex, world) {
         setTimeout(() => {
             world.throwableObjects.splice(bottleIndex, 1);
@@ -130,28 +204,40 @@ class ThrowableObject extends MovableObject {
         }, 600);
     }
 
+    /**
+     * Creates a new bottle object.
+     * @param {Object} character - The character throwing the bottle.
+     * @param {number} collectedBottles - The number of collected bottles.
+     * @param {Object} statusBarBottles - The status bar for bottles.
+     * @param {Object} soundManager - The sound manager.
+     * @param {Object} world - The game world object.
+     * @returns {Object} - An object containing the new bottle and the updated number of collected bottles.
+     */
     static createBottle(character, collectedBottles, statusBarBottles, soundManager, world) {
         if (collectedBottles > 0) {
             const bottleX = character.x + (character.otherDirection ? -50 : 50);
             const bottleY = character.y + 100;
             const bottle = new ThrowableObject(bottleX, bottleY, character.otherDirection);
-            bottle.world = world; // Set the world property
+            bottle.world = world; 
             collectedBottles -= 1;
             statusBarBottles.setPercentage(collectedBottles * 20);
             bottle.animate();
             soundManager.play('throw');
-            console.log(`Bottle thrown, remaining: ${collectedBottles}`);
             return { bottle, collectedBottles };
         }
         return { bottle: null, collectedBottles };
     }
 
-    static scheduleEnemyRemovalFromWorld(enemy, world) { // Umbenannt von scheduleEnemyRemoval
+    /**
+     * Schedules the removal of an enemy from the world.
+     * @param {Object} enemy - The enemy object.
+     * @param {Object} world - The game world object.
+     */
+    static scheduleEnemyRemovalFromWorld(enemy, world) { 
         setTimeout(() => {
             const enemyIndex = world.level.enemies.indexOf(enemy);
             if (enemyIndex > -1) {
                 world.level.enemies.splice(enemyIndex, 1);
-                console.log(`Enemy died, index: ${enemyIndex}`);
                 if (enemy instanceof Endboss) {
                     world.pauseGame();
                     world.soundManager.play('bossDead');
@@ -162,6 +248,9 @@ class ThrowableObject extends MovableObject {
         }, 2000);
     }
 
+    /**
+     * Stops all intervals for the object.
+     */
     stopAllIntervals() {
         clearInterval(this.throwInterval);
         clearInterval(this.gravityInterval);

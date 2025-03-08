@@ -1,3 +1,6 @@
+/**
+ * Represents the keyboard input for the game.
+ */
 class Keyboard {
     LEFT = false;
     RIGHT = false;
@@ -49,6 +52,11 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
+/**
+ * Adds event listeners for touch and mouse events to a button.
+ * @param {string} buttonId - The ID of the button element.
+ * @param {string} key - The key to set in the keyboard object.
+ */
 function addEventListeners(buttonId, key) {
     const button = document.getElementById(buttonId);
     button.addEventListener('touchstart', (e) => {
@@ -69,6 +77,9 @@ function addEventListeners(buttonId, key) {
     });
 }
 
+/**
+ * Adds touch event listeners to the control buttons.
+ */
 function addTouchListeners() {
     addEventListeners('btnLeft', 'LEFT');
     addEventListeners('btnRight', 'RIGHT');

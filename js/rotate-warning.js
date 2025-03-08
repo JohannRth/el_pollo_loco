@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     let rotateWarning = document.getElementById("rotate-warning");
+    let panelBelow = document.querySelector(".panel-below");
 
     /**
-     * Checks if the device is a mobile device.
-     * @returns {boolean} True if a mobile device is detected, false otherwise.
+     * Checks if the device is a mobile device or tablet.
+     * @returns {boolean} True if a mobile device or tablet is detected, false otherwise.
      */
     function isMobileDevice() {
-        return window.innerWidth <= 480;
+        const userAgent = navigator.userAgent.toLowerCase();
+        return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|ipad/.test(userAgent) || window.innerWidth <= 1366;
     }
 
     /**
@@ -18,13 +20,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /**
-     * Updates the visibility of the rotate warning based on device orientation.
+     * Updates the visibility of the rotate warning and panel below based on device orientation.
      */
     function checkOrientation() {
         if (isMobileDevice()) {
             rotateWarning.style.display = isPortraitMode() ? "flex" : "none";
+            panelBelow.style.display = "flex";
         } else {
             rotateWarning.style.display = "none";
+            panelBelow.style.display = "none";
         }
     }
 

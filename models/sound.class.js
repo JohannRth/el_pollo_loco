@@ -1,3 +1,6 @@
+/**
+ * Manages the sounds in the game.
+ */
 class SoundManager {
     constructor() {
         this.sounds = {
@@ -16,16 +19,18 @@ class SoundManager {
             bossDead: new Audio('audio/boss_dead.mp3'),
             win: new Audio('audio/win.mp3'),
             gameOver: new Audio('audio/game_over.mp3'),
-            backgroundMusic: new Audio('audio/bg-music.mp3') // Hintergrundmusik hinzufügen
+            backgroundMusic: new Audio('audio/bg-music.mp3')
         };
-        this.lastPlayed = {}; // Track the last played time for each sound
-        this.volume = 1.0; // Default volume
+        this.lastPlayed = {}; 
+        this.volume = 1.0; 
 
-        // Set initial volume for each sound
         this.setInitialVolumes();
-        this.monitorVolume(); // Start monitoring volume
+        this.monitorVolume(); 
     }
 
+    /**
+     * Sets the initial volumes for each sound.
+     */
     setInitialVolumes() {
         this.sounds.walking.initialVolume = 0.5;
         this.sounds.jump.initialVolume = 0.5;
@@ -42,45 +47,63 @@ class SoundManager {
         this.sounds.bossDead.initialVolume = 0.5;
         this.sounds.win.initialVolume = 0.5;
         this.sounds.gameOver.initialVolume = 0.5;
-        this.sounds.backgroundMusic.initialVolume = 0.1; // Initiale Lautstärke für Hintergrundmusik
+        this.sounds.backgroundMusic.initialVolume = 0.1; 
 
-        // Apply initial volumes
         this.setAllVolumes();
     }
 
+    /**
+     * Sets the volume for all sounds.
+     * @param {number} volume - The volume level to set.
+     */
     setVolume(volume) {
         this.volume = volume;
         this.setAllVolumes();
     }
 
+    /**
+     * Plays the specified sound.
+     * @param {string} soundName - The name of the sound to play.
+     * @param {number} [cooldown=1000] - The cooldown time in milliseconds.
+     * @param {number} [volume=this.volume] - The volume level to set.
+     */
     play(soundName, cooldown = 1000, volume = this.volume) {
-        if (isMuted) return; // Keine Sounds abspielen, wenn stummgeschaltet
+        if (isMuted) return;
         const currentTime = new Date().getTime();
         if (this.sounds[soundName]) {
             if (!this.lastPlayed[soundName] || currentTime - this.lastPlayed[soundName] >= cooldown) {
-                this.sounds[soundName].volume = volume; // Set the volume
-                this.sounds[soundName].currentTime = 0; // Reset the sound to the beginning
+                this.sounds[soundName].volume = volume;
+                this.sounds[soundName].currentTime = 0; 
                 this.sounds[soundName].play().catch(() => {
-                    // Error handling without console.error()
                 });
-                this.lastPlayed[soundName] = currentTime; // Update the last played time
+                this.lastPlayed[soundName] = currentTime; 
             }
         }
     }
 
+    /**
+     * Plays the background music in a loop.
+     */
     playBackgroundMusic() {
-        this.sounds.backgroundMusic.loop = true; // Hintergrundmusik in Schleife abspielen
+        this.sounds.backgroundMusic.loop = true;
         this.sounds.backgroundMusic.play().catch(() => {
-            // Error handling without console.error()
         });
     }
 
+    /**
+     * Pauses the specified sound.
+     * @param {string} soundName - The name of the sound to pause.
+     */
     pause(soundName) {
         if (this.sounds[soundName] && !this.sounds[soundName].paused) {
             this.sounds[soundName].pause();
         }
     }
 
+    /**
+     * Stops the specified sound.
+     * @param {string} soundName - The name of the sound to stop.
+     */
     stop(soundName) {
         if (this.sounds[soundName]) {
             if (!this.sounds[soundName].paused) {
@@ -90,27 +113,57 @@ class SoundManager {
         }
     }
 
+    /**
+     * Pauses all sounds.
+     */
     pauseAllSounds() {
         Object.keys(this.sounds).forEach(soundName => {
             this.pause(soundName);
         });
     }
 
+    /**
+     * Stops all sounds.
+     */
     stopAllSounds() {
         Object.keys(this.sounds).forEach(soundName => {
             this.stop(soundName);
         });
     }
 
+    /**
+     * Sets the volume for all sounds based on the current volume level.
+     */
     setAllVolumes() {
         Object.keys(this.sounds).forEach(soundName => {
             this.sounds[soundName].volume = isMuted ? 0 : this.sounds[soundName].initialVolume;
         });
     }
 
+    /**
+     * Monitors and updates the volume for all sounds.
+     */
     monitorVolume() {
         setInterval(() => {
             this.setAllVolumes();
-        }, 100); // Check and set volume every 100ms
+        }, 100);
+    }
+
+    /**
+     * Mutes all sounds.
+     */
+    muteAll() {
+        Object.keys(this.sounds).forEach(soundName => {
+            this.sounds[soundName].volume = 0;
+        });
+    }
+
+    /**
+     * Unmutes all sounds.
+     */
+    unmuteAll() {
+        Object.keys(this.sounds).forEach(soundName => {
+            this.sounds[soundName].volume = this.sounds[soundName].initialVolume;
+        });
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * Represents the main character in the game.
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
 
     height = 250;
@@ -7,9 +11,9 @@ class Character extends MovableObject {
 
     offset = {
         top: 95,
-        left: 10,
-        right: 15,
-        bottom: 10
+        left: 18,
+        right: 23,
+        bottom: 5
     };
 
     IMAGES_IDLE = [
@@ -79,6 +83,9 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/running.mp3');
     soundManager = new SoundManager();
 
+    /**
+     * Creates an instance of Character.
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.IMAGES_IDLE);
@@ -91,10 +98,17 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Checks if the character is dead.
+     * @returns {boolean} True if the character is dead, otherwise false.
+     */
     isDead() {
         return this.energy <= 0;
     }
 
+    /**
+     * Resets the character's properties to their initial values.
+     */
     reset() {
         this.energy = 100;
         this.isDead = false;
@@ -102,12 +116,18 @@ class Character extends MovableObject {
         this.y = 280;
     }
 
+    /**
+     * Animates the character by handling movement and animations.
+     */
     animate() {
         this.handleMovement();
         this.handleAnimations();
         this.handleIdleAnimation();
     }
 
+    /**
+     * Handles the character's movement.
+     */
     handleMovement() {
         this.movementInterval = setInterval(() => {
             let isWalking = this.checkWalking();
@@ -117,6 +137,10 @@ class Character extends MovableObject {
         }, 1000 / 60);
     }
 
+    /**
+     * Checks if the character is walking.
+     * @returns {boolean} True if the character is walking, otherwise false.
+     */
     checkWalking() {
         let isWalking = false;
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -131,66 +155,84 @@ class Character extends MovableObject {
         return isWalking;
     }
 
+    /**
+     * Checks if the character is jumping.
+     */
     checkJumping() {
         if (this.world.keyboard.UP && !this.isAboveGround() || this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
-            this.soundManager.play('jump', 1000); // Play jump sound with a cooldown of 1000ms
+            this.soundManager.play('jump', 1000); 
         }
     }
 
+    /**
+     * Updates the camera position based on the character's position.
+     */
     updateCamera() {
         this.world.camera_x = -this.x + 100;
     }
 
+    /**
+     * Handles the walking sound based on the character's movement.
+     * @param {boolean} isWalking - True if the character is walking, otherwise false.
+     */
     handleWalkingSound(isWalking) {
         if (isWalking) {
-            this.soundManager.play('walking'); // Play walking sound without cooldown
+            this.soundManager.play('walking'); 
         } else {
-            this.soundManager.pause('walking'); // Pause walking sound if character is not walking
+            this.soundManager.pause('walking'); 
         }
     }
 
+    /**
+     * Handles the character's animations.
+     */
     handleAnimations() {
         this.animationInterval = setInterval(() => {
             if (this.isDead()) {
-                this.soundManager.play('dead', 9999999999); // Play dead sound with a cooldown of 9999999999ms
+                this.soundManager.play('dead', 9999999999); 
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
-                this.soundManager.play('hurt', 1500); // Play hurt sound with a cooldown of 1500ms
+                this.soundManager.play('hurt', 1500);
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    //Walk animation
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             };
         }, 90);
     }
 
+    /**
+     * Handles the character's idle animation.
+     */
     handleIdleAnimation() {
         this.idleInterval = setInterval(() => {
             if (this.isWaiting()) {
                 this.playAnimation(this.IMAGES_IDLE);
-                this.timer += 300; // Erhöhe den Timer um 300 Millisekunden
-                if (this.timer >= 7000) { // Überprüfe, ob 7 Sekunden vorbei sind
+                this.timer += 300; 
+                if (this.timer >= 7000) { 
                     this.playAnimation(this.IMAGES_LONGIDLE);
-                    this.soundManager.play('snoring', 18000); // Play snoring sound with a cooldown of 18000ms
+                    this.soundManager.play('snoring', 18000); 
                 }
             } else {
-                this.timer = 0; // Timer zurücksetzen, wenn die Bedingung nicht erfüllt ist
-                this.soundManager.stop('snoring'); // Stop snoring sound if character moves
+                this.timer = 0; 
+                this.soundManager.stop('snoring'); 
             }
-        }, 300); // Wird alle 300 Millisekunden aufgerufen
+        }, 300); 
     }
 
+    /**
+     * Stops all animation and movement intervals.
+     */
     stopAllIntervals() {
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);
         clearInterval(this.idleInterval);
-        this.handleWalkingSound(false); // Stop walking sound immediately
-        this.soundManager.stop('snoring'); // Stop snoring sound immediately
+        this.handleWalkingSound(false); 
+        this.soundManager.stop('snoring'); 
      }
 
 }

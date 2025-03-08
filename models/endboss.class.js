@@ -1,8 +1,12 @@
+/**
+ * Represents the Endboss character in the game.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
     energy = 100;
     height = 400;
     width = 250;
-    speed = 0.8;
+    speed = 1;
     x = 2200;
     y = 60;
 
@@ -57,8 +61,13 @@ class Endboss extends MovableObject {
     soundManager = new SoundManager();
     statusBarEndboss = new StatusBarEndboss();
     isAttacking = false;
-    isHurtAnimationPlaying = false; // Add flag to indicate Hurt animation playing
+    isHurtAnimationPlaying = false; 
 
+    /**
+     * Creates an instance of Endboss.
+     * @param {number} x - The initial x-coordinate of the Endboss.
+     * @param {number} y - The initial y-coordinate of the Endboss.
+     */
     constructor(x, y){
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
@@ -68,21 +77,28 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.x = x;
         this.y = y;
-        this.alertPlayedOff = false; // Initialize alertPlayedOff property
+        this.alertPlayedOff = false; 
         this.statusBarEndboss.setPercentage(this.energy);
         this.animate();
     }
 
+    /**
+     * Reduces the energy of the Endboss by the specified damage.
+     * @param {number} [damage=1] - The amount of damage to inflict.
+     */
     hit(damage = 1) {
         this.soundManager.play('bossHurt', 1000);
         super.hit(damage);
         this.statusBarEndboss.setPercentage(this.energy);
-        this.isHurtAnimationPlaying = true; // Set flag to true when hit
+        this.isHurtAnimationPlaying = true; 
         setTimeout(() => {
-            this.isHurtAnimationPlaying = false; // Reset flag after Hurt animation duration
-        }, 500); // Assuming Hurt animation duration is 500ms
+            this.isHurtAnimationPlaying = false; 
+        }, 500); 
     }
 
+    /**
+     * Animates the Endboss by switching between different images.
+     */
     animate() {
         this.animationInterval = setInterval(() => {
             if (super.isDead()) {
@@ -99,12 +115,87 @@ class Endboss extends MovableObject {
         }, 200);
 
         this.movementInterval = setInterval(() => {
-            if (this.bossIsActivated && !this.isHurtAnimationPlaying) { // Prevent movement during Hurt animation
+            if (this.bossIsActivated && !this.isHurtAnimationPlaying && !this.isAttacking) { 
                 this.moveLeft();
+            }
+        }, 1000 / 60);
+
+        this.scheduleRandomAttack();
+    }
+
+    /**
+     * Schedules a random attack for the endboss.
+     */
+    scheduleRandomAttack() {
+        setInterval(() => {
+            if (!super.isDead() && this.bossIsActivated) {
+                this.performAttack();
+            }
+        }, 2000 + Math.random() * 3000); // Random interval between 3 and 8 seconds
+    }
+
+    /**
+     * Performs an attack by moving quickly to the left and then quickly back to the right.
+     */
+    performAttack() {
+        this.isAttacking = true;
+        this.playAnimation(this.IMAGES_ATTACK); // Start attack animation
+        let originalSpeed = this.speed;
+        this.moveLeftQuickly(200, 10, () => {
+            this.moveRightQuickly(90, 10, () => {
+                this.restoreOriginalSpeed(originalSpeed);
+            });
+        });
+    }
+
+    /**
+     * Moves the endboss quickly to the left.
+     * @param {number} distance - The distance to move.
+     * @param {number} speed - The speed of the movement.
+     * @param {Function} callback - The callback function to call after the movement is complete.
+     */
+    moveLeftQuickly(distance, speed, callback) {
+        let attackInterval = setInterval(() => {
+            if (distance > 0) {
+                this.x -= speed;
+                distance -= speed;
+            } else {
+                clearInterval(attackInterval);
+                callback();
             }
         }, 1000 / 60);
     }
 
+    /**
+     * Moves the endboss quickly to the right.
+     * @param {number} distance - The distance to move.
+     * @param {number} speed - The speed of the movement.
+     * @param {Function} callback - The callback function to call after the movement is complete.
+     */
+    moveRightQuickly(distance, speed, callback) {
+        let returnInterval = setInterval(() => {
+            if (distance > 0) {
+                this.x += speed;
+                distance -= speed;
+            } else {
+                clearInterval(returnInterval);
+                callback();
+            }
+        }, 1000 / 60);
+    }
+
+    /**
+     * Restores the original speed of the endboss.
+     * @param {number} originalSpeed - The original speed to restore.
+     */
+    restoreOriginalSpeed(originalSpeed) {
+        this.isAttacking = false;
+        this.speed = originalSpeed;
+    }
+
+    /**
+     * Activates the boss with an alert animation and sound.
+     */
     activateBossWithAlert() {
         if (!this.bossIsActivated) {
             this.soundManager.play('bossAlert', 1000);
@@ -112,14 +203,17 @@ class Endboss extends MovableObject {
             setTimeout(() => {
                 this.bossIsActivated = this.activateBoss();
                 this.alertPlayedOff = true;
-            }, 1000); // Duration of alert animation
+            }, 1000); 
         }
     }
 
+    /**
+     * Applies a knockback effect to the Endboss.
+     */
     knockback() {
-        let distance = 200; // Gesamtstrecke des Rückstoßes
-        let steps = 10; // Anzahl der Schritte
-        let stepSize = distance / steps; // Wie viel pro Schritt bewegt wird
+        let distance = 200; 
+        let steps = 10; 
+        let stepSize = distance / steps; 
         let step = 0;
 
         let interval = setInterval(() => {
@@ -129,11 +223,16 @@ class Endboss extends MovableObject {
             } else {
                 clearInterval(interval);
             }
-        }, 20); // Alle 20ms bewegen
+        }, 20); 
     }
 
+    /**
+     * Stops all animation and movement intervals.
+     */
     stopAllIntervals() {
         clearInterval(this.animationInterval);
         clearInterval(this.movementInterval);
+        clearInterval(this.attackInterval); 
+        clearInterval(this.returnInterval); 
     }
 }

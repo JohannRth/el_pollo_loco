@@ -169,6 +169,24 @@ canvas {
     position: absolute;
 }
 
+.panel-above {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    position: absolute;
+    z-index: 1;
+    top: 1vh;
+}
+
+.panel-above .btn {
+    padding: 8px 8px;
+}
+
+.panel-above img {
+    display: flex;
+    width: 40px;
+}
+
 .panel-below {
     position: absolute;
     display: none;
@@ -216,32 +234,10 @@ canvas {
     background-color: #b85600;
 }
 
-.mute-panel {
-    display: flex;
-    position: absolute;
-    flex-direction: column;
-    z-index: 1;
-    top: 1vh;
-}
-
-.mute-panel .btn {
-    padding: 8px 8px;
-}
-
-.mute-panel img {
-    display: flex;
-    width: 40px;
-}
-
-
 @media only screen and (max-width: 1080px) {
     canvas {
         width: 100vw;
         height: 100vh;
-    }
-
-    .panel-below {
-        display: flex;
     }
 
     .menu-container {
@@ -268,6 +264,14 @@ canvas {
         width: 100vw;
         height: 100vh;
         aspect-ratio: auto 720 / 480;
+    }
+
+    .panel-below {
+        display: flex !important;
+    }
+
+    .toggle-button {
+        display: none;
     }
 
 }

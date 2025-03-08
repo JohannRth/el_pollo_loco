@@ -52,8 +52,9 @@
 
         <div id="game" class="game-content" style="display: none;">
 
-            <div class="mute-panel">
+            <div class="panel-above">
                 <div class="btn" onclick="toggleMute()"><img id="mute-icon" src="img/sound/unmute.png" alt="unmute"></div>
+                <div class="toggle-button btn" onclick="toggleButtons()"><img id="buttonsIcon" src="img/keyboard/buttons.png" alt="buttons on"></div>
             </div>
 
             <canvas id="canvas" width="720" height="480"></canvas>
@@ -85,7 +86,13 @@
 
         <div id="imprint" class="imprint-container" style="display: none;">
             <h1>Impressum</h1>
-            <p>Here you can add your personal information or legal notice.</p>
+            <b><p>Angaben gemäß § 5 TMG</p></b>
+            <p>Johann Roth</p>
+            <p>Fischerlohe 4c</p>
+            <p>85077 Manching</p>
+            <p>Kontakt: johann.roth.e46@googlemail.com</p>
+            <b><p>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</p></b>
+            <p>Johann Roth</p>
             <button class="back-to-menu btn" onclick="showMenu()">X</button>
         </div>
 
