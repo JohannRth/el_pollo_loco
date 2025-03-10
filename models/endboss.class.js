@@ -131,7 +131,7 @@ class Endboss extends MovableObject {
             if (!super.isDead() && this.bossIsActivated) {
                 this.performAttack();
             }
-        }, 2000 + Math.random() * 3000); // Random interval between 3 and 8 seconds
+        }, 2000 + Math.random() * 3000); 
     }
 
     /**
@@ -139,7 +139,7 @@ class Endboss extends MovableObject {
      */
     performAttack() {
         this.isAttacking = true;
-        this.playAnimation(this.IMAGES_ATTACK); // Start attack animation
+        this.playAnimation(this.IMAGES_ATTACK); 
         let originalSpeed = this.speed;
         this.moveLeftQuickly(200, 10, () => {
             this.moveRightQuickly(90, 10, () => {

@@ -10,7 +10,7 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     addTouchListeners();
-    loadMuteSetting(); // Load the mute setting from localStorage
+    loadMuteSetting();
     world.soundManager.playBackgroundMusic();
 }
 

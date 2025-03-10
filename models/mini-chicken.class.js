@@ -63,6 +63,6 @@ class MiniChicken extends MovableObject {
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 200);
+        }, 60);
     }
 }

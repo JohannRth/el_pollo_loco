@@ -282,3 +282,38 @@ canvas {
     }
 
 }
+
+@media screen and (max-height: 480px) {
+    canvas {
+        width: unset;
+        height: 100vh;
+        aspect-ratio: auto 720 / 480;
+    }
+
+    .menu-container {
+        width: unset;
+        height: 100vh;
+        object-fit: fill;
+        aspect-ratio: auto 720 / 480;
+    }
+
+    .game-content {
+        width: unset;
+        height: 100vh;
+        aspect-ratio: auto 720 / 480;
+    }
+
+    .win-loose-container {
+        width: unset;
+        height: 100vh;
+        aspect-ratio: auto 720 / 480;
+    }
+
+    .instructions-container,
+    .imprint-container {
+        width: 100vw;
+        height: unset;
+        aspect-ratio: auto 720 / 480;
+    }
+    
+}
