@@ -14,7 +14,7 @@ class SoundManager {
             bottleBreak: new Audio('audio/bottle_break.mp3'),
             throw: new Audio('audio/throw.mp3'),
             chickenDead: new Audio('audio/chicken_dead.mp3'),
-            bossAlert: new Audio('audio/boss_alert.mp3'),
+            bossAlert: new Audio('audio/boss_alert.mp3'), 
             bossHurt: new Audio('audio/boss_hurt.mp3'),
             bossDead: new Audio('audio/boss_dead.mp3'),
             win: new Audio('audio/win.mp3'),
@@ -42,7 +42,7 @@ class SoundManager {
         this.sounds.bottleBreak.initialVolume = 0.5;
         this.sounds.throw.initialVolume = 0.5;
         this.sounds.chickenDead.initialVolume = 0.5;
-        this.sounds.bossAlert.initialVolume = 0.5;
+        this.sounds.bossAlert.initialVolume = 0.3;
         this.sounds.bossHurt.initialVolume = 0.5;
         this.sounds.bossDead.initialVolume = 0.5;
         this.sounds.win.initialVolume = 0.5;
@@ -87,6 +87,15 @@ class SoundManager {
     playBackgroundMusic() {
         this.sounds.backgroundMusic.loop = true;
         this.sounds.backgroundMusic.play().catch(() => {
+        });
+    }
+
+    /**
+     * Plays the boss alert sound in a loop.
+     */
+    playBossAlert() {
+        this.sounds.bossAlert.loop = true;
+        this.sounds.bossAlert.play().catch(() => {
         });
     }
 

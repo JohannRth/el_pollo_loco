@@ -271,6 +271,8 @@ class World {
         if (this.character.x > enemy.x - 500) {
             enemy.activateBossWithAlert();
             this.statusBarEndboss.setPercentage(enemy.energy); 
+            this.soundManager.pause('backgroundMusic'); 
+            this.soundManager.playBossAlert(); 
         }
         if (this.character.x > enemy.x - 100 && this.character.x < enemy.x + 100) {
             enemy.isAttacking = true; 
@@ -361,8 +363,8 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        // mo.drawFrame(this.ctx); 
-        // mo.drawFrameOffset(this.ctx);
+        // mo.drawFrame(this.ctx); // only for devolopment
+        // mo.drawFrameOffset(this.ctx); // only for devolopment
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

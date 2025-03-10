@@ -198,7 +198,6 @@ class Endboss extends MovableObject {
      */
     activateBossWithAlert() {
         if (!this.bossIsActivated) {
-            this.soundManager.play('bossAlert', 1000);
             this.playAnimation(this.IMAGES_ALERT);
             setTimeout(() => {
                 this.bossIsActivated = this.activateBoss();
