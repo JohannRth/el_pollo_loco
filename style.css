@@ -105,6 +105,7 @@ canvas {
 .imprint-container {
     width: 720px;
     height: 480px;
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,6 +115,7 @@ canvas {
     scrollbar-width: none;
     z-index: 5;
     overflow: auto;
+    aspect-ratio: auto 720 / auto 480;
 }
 
 .instructions-pics {
@@ -234,35 +236,41 @@ canvas {
     background-color: #b85600;
 }
 
-@media only screen and (max-width: 1080px) {
+@media screen and (max-width: 1080px) {
     canvas {
         width: 100vw;
-        height: 100vh;
+        height: auto;
+        aspect-ratio: auto 720 / 480;
     }
 
     .menu-container {
         width: 100vw;
-        height: 100vh;
+        height: auto;
         object-fit: fill;
         aspect-ratio: auto 720 / 480;
     }
 
+    .game-container {
+        width: 100vw;
+        height: auto;
+    }
+
     .game-content {
         width: 100vw;
-        height: 100vh;
+        height: auto;
         aspect-ratio: auto 720 / 480;
     }
 
     .win-loose-container {
         width: 100vw;
-        height: 100vh;
+        height: auto;
         aspect-ratio: auto 720 / 480;
     }
 
     .instructions-container,
     .imprint-container {
         width: 100vw;
-        height: 100vh;
+        height: auto;
         aspect-ratio: auto 720 / 480;
     }
 
@@ -276,43 +284,43 @@ canvas {
 
 }
 
-@media only screen and (max-width: 480px) {
+@media screen and (max-height: 700px) {
     canvas {
-        height: 100vh;
+        aspect-ratio: auto 720 / 480;
     }
 
 }
 
 @media screen and (max-height: 480px) {
     canvas {
-        width: unset;
+        width: auto;
         height: 100vh;
         aspect-ratio: auto 720 / 480;
     }
 
     .menu-container {
-        width: unset;
+        width: auto;
         height: 100vh;
         object-fit: fill;
         aspect-ratio: auto 720 / 480;
     }
 
     .game-content {
-        width: unset;
+        width: auto;
         height: 100vh;
         aspect-ratio: auto 720 / 480;
     }
 
     .win-loose-container {
-        width: unset;
+        width: auto;
         height: 100vh;
         aspect-ratio: auto 720 / 480;
     }
 
     .instructions-container,
     .imprint-container {
-        width: 100vw;
-        height: unset;
+        width: auto;
+        height: 100vh;
         aspect-ratio: auto 720 / 480;
     }
     
