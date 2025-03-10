@@ -238,39 +238,19 @@ canvas {
 
 @media screen and (max-width: 1080px) {
     canvas {
-        width: 100vw;
-        height: auto;
+        width: min(100vw, calc(100vh * 1.5));
+        height: min(100vh, calc(100vw / 1.5));
         aspect-ratio: auto 720 / 480;
     }
 
-    .menu-container {
-        width: 100vw;
-        height: auto;
-        object-fit: fill;
-        aspect-ratio: auto 720 / 480;
-    }
-
-    .game-container {
-        width: 100vw;
-        height: auto;
-    }
-
-    .game-content {
-        width: 100vw;
-        height: auto;
-        aspect-ratio: auto 720 / 480;
-    }
-
-    .win-loose-container {
-        width: 100vw;
-        height: auto;
-        aspect-ratio: auto 720 / 480;
-    }
-
+    .menu-container,
+    .game-container,
+    .game-content,
+    .win-loose-container,
     .instructions-container,
     .imprint-container {
-        width: 100vw;
-        height: auto;
+        width: min(100vw, calc(100vh * 1.5));
+        height: min(100vh, calc(100vw / 1.5));
         aspect-ratio: auto 720 / 480;
     }
 
@@ -293,35 +273,19 @@ canvas {
 
 @media screen and (max-height: 480px) {
     canvas {
-        width: auto;
-        height: 100vh;
+        width: min(100vw, calc(100vh * 1.5));
+        height: min(100vh, calc(100vw / 1.5));
         aspect-ratio: auto 720 / 480;
     }
 
-    .menu-container {
-        width: auto;
-        height: 100vh;
-        object-fit: fill;
-        aspect-ratio: auto 720 / 480;
-    }
-
-    .game-content {
-        width: auto;
-        height: 100vh;
-        aspect-ratio: auto 720 / 480;
-    }
-
-    .win-loose-container {
-        width: auto;
-        height: 100vh;
-        aspect-ratio: auto 720 / 480;
-    }
-
+    .menu-container,
+    .game-container,
+    .game-content,
+    .win-loose-container,
     .instructions-container,
     .imprint-container {
-        width: auto;
-        height: 100vh;
+        width: min(100vw, calc(100vh * 1.5));
+        height: min(100vh, calc(100vw / 1.5));
         aspect-ratio: auto 720 / 480;
     }
-    
 }
