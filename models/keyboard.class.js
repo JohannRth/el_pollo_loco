@@ -67,11 +67,19 @@ function addEventListeners(buttonId, key) {
         e.preventDefault();
         keyboard[key] = false;
     });
+    button.addEventListener('touchcancel', (e) => { // Added touchcancel event
+        e.preventDefault();
+        keyboard[key] = false;
+    });
     button.addEventListener('mousedown', (e) => {
         e.preventDefault();
         keyboard[key] = true;
     });
     button.addEventListener('mouseup', (e) => {
+        e.preventDefault();
+        keyboard[key] = false;
+    });
+    button.addEventListener('mouseleave', (e) => { // Added mouseleave event
         e.preventDefault();
         keyboard[key] = false;
     });
